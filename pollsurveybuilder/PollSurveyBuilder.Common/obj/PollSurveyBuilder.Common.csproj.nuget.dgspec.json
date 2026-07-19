@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {}
+    "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {}
   },
   "projects": {
-    "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {
+    "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj",
+        "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj",
         "projectName": "PollSurveyBuilder.Common",
-        "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj",
+        "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj",
         "packagesPath": "C:\\Users\\Hi There\\.nuget\\packages\\",
-        "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\obj\\",
+        "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

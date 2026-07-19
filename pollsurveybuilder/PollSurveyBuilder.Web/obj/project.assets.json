@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj",
+      "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj",
       "projectName": "PollSurveyBuilder.Web",
-      "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj",
+      "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj",
       "packagesPath": "C:\\Users\\Hi There\\.nuget\\packages\\",
-      "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Web\\obj\\",
+      "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

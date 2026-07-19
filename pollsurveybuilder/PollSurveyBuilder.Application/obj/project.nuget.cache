@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cCpr1lWzrZo=",
+  "dgSpecHash": "jBSmydIHkBc=",
   "success": true,
-  "projectFilePath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
+  "projectFilePath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hi There\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Hi There\\.nuget\\packages\\microsoft.bcl.cryptography\\10.0.2\\microsoft.bcl.cryptography.10.0.2.nupkg.sha512",

@@ -166,16 +166,17 @@ public class VoteService : IVoteService
         if (poll.IsClosed) throw new InvalidOperationException("Cuộc thăm dò này đã đóng.");
         if (poll.IsExpired) throw new InvalidOperationException("Cuộc thăm dò này đã hết hạn.");
 
-        // Single vote validation
-        if (userId.HasValue)
-        {
-            bool hasVoted = await _voteRepository.HasUserVotedAsync(poll.Id, userId.Value);
-            if (hasVoted) throw new InvalidOperationException("Tài khoản của bạn đã thực hiện bình chọn cho cuộc thăm dò này rồi.");
-        }
-        else if (!string.IsNullOrEmpty(dto.VoterToken))
+        // Single vote validation (Check BOTH VoterToken and UserId)
+        if (!string.IsNullOrEmpty(dto.VoterToken))
         {
             bool hasVotedToken = await _voteRepository.HasVotedAsync(poll.Id, dto.VoterToken);
-            if (hasVotedToken) throw new InvalidOperationException("Bạn đã bỏ phiếu cho cuộc thăm dò này rồi.");
+            if (hasVotedToken) throw new InvalidOperationException("Bạn (hoặc trình duyệt này) đã thực hiện bỏ phiếu cho cuộc thăm dò này rồi.");
+        }
+
+        if (userId.HasValue)
+        {
+            bool hasVotedUser = await _voteRepository.HasUserVotedAsync(poll.Id, userId.Value);
+            if (hasVotedUser) throw new InvalidOperationException("Tài khoản của bạn đã thực hiện bình chọn cho cuộc thăm dò này rồi.");
         }
 
         var vote = new Vote
