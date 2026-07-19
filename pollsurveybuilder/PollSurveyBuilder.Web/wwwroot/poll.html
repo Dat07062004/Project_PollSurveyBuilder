@@ -126,7 +126,7 @@
             const optionsArea = document.getElementById('options-area');
             const openTextArea = document.getElementById('open-text-area');
 
-            if (poll.questionType === 1) { // Open Text
+            if (poll.questionType === 3) { // Open Text
                 optionsArea.classList.add('d-none');
                 openTextArea.classList.remove('d-none');
             } else {
@@ -153,15 +153,10 @@
                     return;
                 }
 
-                if (!window.PollAuth.isLoggedIn()) {
-                    window.showAuthRequiredModal("Bạn cần đăng nhập hoặc đăng ký tài khoản để có quyền gửi bình chọn (Mỗi tài khoản được vote 1 lần).");
-                    return;
-                }
-
                 let selectedIndex = 0;
                 let textResp = null;
 
-                if (poll.questionType === 1) {
+                if (poll.questionType === 3) { // Open Text
                     textResp = document.getElementById('text-response').value.trim();
                     if (!textResp) {
                         alert("Vui lòng nhập ý kiến của bạn.");

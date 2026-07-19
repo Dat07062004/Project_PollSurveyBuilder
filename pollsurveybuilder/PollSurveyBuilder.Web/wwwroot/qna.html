@@ -75,11 +75,6 @@
                 return;
             }
 
-            if (!window.PollAuth.isLoggedIn()) {
-                window.showAuthRequiredModal("Vui lòng đăng nhập để tham gia đặt câu hỏi và bình chọn Q&A.");
-                return;
-            }
-
             document.getElementById('badge-code').innerText = code;
             document.getElementById('link-poll').href = `poll.html?code=${code}`;
             document.getElementById('link-results').href = `results.html?code=${code}`;
@@ -125,6 +120,9 @@
                             <button class="btn btn-outline-primary btn-sm fw-bold rounded-pill" onclick="upvoteQuestion('${q.id}')">
                                 <i class="bi bi-hand-thumbs-up-fill me-1"></i>${q.upvotes}
                             </button>
+                            <button class="btn btn-outline-warning btn-sm fw-bold rounded-pill" onclick="togglePinQuestion('${q.id}')">
+                                <i class="bi bi-pin-angle-fill me-1"></i>${q.isPinned ? 'Bỏ ghim' : 'Ghim'}
+                            </button>
                         </div>
                     </div>
                 `;
@@ -134,11 +132,6 @@
 
         document.getElementById('qna-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            if (!window.PollAuth.isLoggedIn()) {
-                window.showAuthRequiredModal("Vui lòng đăng nhập để gửi câu hỏi Q&A.");
-                return;
-            }
 
             const text = document.getElementById('question-text').value.trim();
             if (!text) return;
@@ -165,6 +158,18 @@
         async function upvoteQuestion(id) {
             try {
                 await fetch(`/api/polls/qna/${id}/upvote`, {
+                    method: 'POST',
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                await loadQuestions();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function togglePinQuestion(id) {
+            try {
+                await fetch(`/api/polls/qna/${id}/pin`, {
                     method: 'POST',
                     headers: window.PollAuth.getAuthHeaders()
                 });

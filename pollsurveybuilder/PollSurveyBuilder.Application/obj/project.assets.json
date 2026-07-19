@@ -587,11 +587,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
+      "projectUniqueName": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
       "projectName": "PollSurveyBuilder.Application",
-      "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
+      "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Application\\PollSurveyBuilder.Application.csproj",
       "packagesPath": "C:\\Users\\Hi There\\.nuget\\packages\\",
-      "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Application\\obj\\",
+      "outputPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -614,11 +614,11 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {
-              "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj"
+            "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj": {
+              "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Common\\PollSurveyBuilder.Common.csproj"
             },
-            "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj": {
-              "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj"
+            "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj": {
+              "projectPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj"
             }
           }
         }

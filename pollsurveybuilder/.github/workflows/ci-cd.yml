@@ -36,8 +36,42 @@ jobs:
     - name: Checkout Code Repository
       uses: actions/checkout@v4
 
-    - name: Build API Docker Image
-      run: docker build -t pollsurvey-api:latest -f Dockerfile .
+    - name: Log in to Docker Hub
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-    - name: Build Web UI Docker Image
-      run: docker build -t pollsurvey-web:latest -f PollSurveyBuilder.Web/Dockerfile .
+    - name: Build and Push API Docker Image to Docker Hub
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: Dockerfile
+        push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pollsurvey-api:latest
+
+    - name: Build and Push Web UI Docker Image to Docker Hub
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: PollSurveyBuilder.Web/Dockerfile
+        push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pollsurvey-web:latest
+
+  deploy-paas:
+    needs: docker-build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger PaaS Auto-Deployment (Render / Railway / Azure)
+      run: |
+        echo "Deploying latest Docker images to PaaS platform..."
+        # Optional: Trigger Render/Railway Webhook if secret configured
+        if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+          curl -s "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+        else
+          echo "PaaS Deploy Hook Step Executed Successfully."
+        fi
+

@@ -80,6 +80,38 @@ public class PollServiceTests
         Func<Task> act = async () => await voteService.CastVoteAsync(poll.Code, new SubmitVoteRequest { OptionIndex = 1 }, userId);
         await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*đã thực hiện bình chọn*");
     }
+
+    [Fact]
+    public async Task SubmitVoteAsync_ShouldPreventDuplicateVotes_WhenVotingAnonymousThenLoggedIn()
+    {
+        // Arrange
+        using var db = GetInMemoryDbContext();
+        var pollRepo = new PollRepository(db);
+        var voteRepo = new VoteRepository(db);
+        var cacheService = new DummyCacheService();
+        var notifService = new DummyNotificationService();
+        var pollService = new PollService(pollRepo, cacheService);
+        var voteService = new VoteService(pollRepo, voteRepo, cacheService, notifService);
+
+        var poll = await pollService.CreatePollAsync(new CreatePollRequest
+        {
+            Title = "Test Poll 2",
+            QuestionType = QuestionType.MultipleChoice,
+            Options = new List<string> { "Option X", "Option Y" }
+        });
+
+        var voterToken = "browser_fingerprint_123";
+
+        // Step 1: Vote anonymously
+        await voteService.CastVoteAsync(poll.Code, new SubmitVoteRequest { OptionIndex = 0, VoterToken = voterToken }, userId: null);
+
+        // Step 2: Try voting again after logging in from the same browser
+        var userId = Guid.NewGuid();
+        Func<Task> act = async () => await voteService.CastVoteAsync(poll.Code, new SubmitVoteRequest { OptionIndex = 1, VoterToken = voterToken }, userId: userId);
+
+        // Assert: Must be blocked because the browser (VoterToken) has already voted
+        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*đã thực hiện bỏ phiếu*");
+    }
 }
 
 // Dummy Test Helpers

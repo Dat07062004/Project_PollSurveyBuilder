@@ -58,16 +58,30 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <input type="radio" class="btn-check" name="questionType" id="type-mc" value="0" checked>
-                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3" for="type-mc">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-mc">
                                         <div class="fw-bold fs-6"><i class="bi bi-list-check me-2"></i>Trắc nghiệm (Multiple Choice)</div>
-                                        <div class="small text-muted mt-1">Người tham gia chọn 1 trong danh sách phương án</div>
+                                        <div class="small text-muted mt-1">Tùy chọn danh sách phương án trả lời</div>
                                     </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="radio" class="btn-check" name="questionType" id="type-open" value="1">
-                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3" for="type-open">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-yesno" value="1">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-yesno">
+                                        <div class="fw-bold fs-6"><i class="bi bi-check2-circle me-2"></i>Có / Không (Yes / No)</div>
+                                        <div class="small text-muted mt-1">Tự động tạo phương án "Có" và "Không"</div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-rating" value="2">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-rating">
+                                        <div class="fw-bold fs-6"><i class="bi bi-star-fill me-2"></i>Đánh giá (1-5 Sao)</div>
+                                        <div class="small text-muted mt-1">Tự động tạo mức đánh giá từ 1 đến 5 sao</div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-open" value="3">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-open">
                                         <div class="fw-bold fs-6"><i class="bi bi-chat-left-text me-2"></i>Câu hỏi mở (Open Text)</div>
-                                        <div class="small text-muted mt-1">Người tham gia nhập câu trả lời tự do bằng văn bản</div>
+                                        <div class="small text-muted mt-1">Nhập ý kiến phản hồi tự do bằng văn bản</div>
                                     </label>
                                 </div>
                             </div>
@@ -148,12 +162,12 @@
             radio.addEventListener('change', (e) => {
                 const wrapper = document.getElementById('options-container-wrapper');
                 const inputs = document.querySelectorAll('.option-input');
-                if (e.target.value === '1') {
-                    wrapper.classList.add('d-none');
-                    inputs.forEach(input => input.removeAttribute('required'));
-                } else {
+                if (e.target.value === '0') {
                     wrapper.classList.remove('d-none');
                     inputs.forEach(input => input.setAttribute('required', 'required'));
+                } else {
+                    wrapper.classList.add('d-none');
+                    inputs.forEach(input => input.removeAttribute('required'));
                 }
             });
         });
@@ -204,7 +218,7 @@
             const expiresAt = expiresAtInput ? new Date(expiresAtInput).toISOString() : null;
 
             let options = [];
-            if (questionType === 0) {
+            if (questionType === 0) { // MultipleChoice
                 options = Array.from(document.querySelectorAll('.option-input'))
                     .map(input => input.value.trim())
                     .filter(val => val.length > 0);
@@ -213,6 +227,10 @@
                     alert('Vui lòng nhập ít nhất 2 phương án cho câu hỏi trắc nghiệm.');
                     return;
                 }
+            } else if (questionType === 1) { // YesNo
+                options = ['Có', 'Không'];
+            } else if (questionType === 2) { // Rating
+                options = ['1 ⭐ (Rất tệ)', '2 ⭐ (Tệ)', '3 ⭐ (Bình thường)', '4 ⭐ (Tốt)', '5 ⭐ (Rất tốt)'];
             }
 
             const payload = { title, description, questionType, options, expiresAt };

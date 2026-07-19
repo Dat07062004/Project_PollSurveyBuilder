@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\pollsurveybuilder\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8C8DC327-8AC1-503F-D40D-0ADBD698AD8A}|PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.web\\wwwroot\\poll.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8C8DC327-8AC1-503F-D40D-0ADBD698AD8A}|PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj|solutionrelative:pollsurveybuilder.web\\wwwroot\\poll.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 180,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +27,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "poll.html",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\wwwroot\\poll.html",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Web\\wwwroot\\poll.html",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\wwwroot\\poll.html",
+              "RelativeToolTip": "PollSurveyBuilder.Web\\wwwroot\\poll.html",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-07-19T18:38:50.952Z",
+              "EditorCaption": ""
             }
           ]
         }
