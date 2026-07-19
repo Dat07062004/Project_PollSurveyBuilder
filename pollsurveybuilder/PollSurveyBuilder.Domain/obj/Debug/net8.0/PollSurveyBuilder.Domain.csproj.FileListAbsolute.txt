@@ -1,0 +1,11 @@
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\bin\Debug\net8.0\PollSurveyBuilder.Domain.deps.json
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\bin\Debug\net8.0\PollSurveyBuilder.Domain.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\bin\Debug\net8.0\PollSurveyBuilder.Domain.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.AssemblyInfoInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.AssemblyInfo.cs
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.csproj.CoreCompileInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\refint\PollSurveyBuilder.Domain.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\PollSurveyBuilder.Domain.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Domain\obj\Debug\net8.0\ref\PollSurveyBuilder.Domain.dll

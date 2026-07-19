@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách cuộc thăm dò của tôi - Poll & Survey Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .card-poll { border: none; border-radius: 16px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-poll:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08) !important; }
+        .badge-type { background: #eef2ff; color: #4f46e5; border-radius: 20px; padding: 6px 14px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div id="main-nav"></div>
+
+    <div class="container py-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">
+                    <i class="bi bi-collection-fill text-primary me-2"></i>Danh sách cuộc thăm dò của tôi
+                </h2>
+                <p class="text-muted mb-0">Quản lý, xem kết quả live, sao chép liên kết, xem phân tích và đóng các cuộc thăm dò bạn đã tạo.</p>
+            </div>
+            <a href="index.html" class="btn btn-primary btn-lg fw-bold rounded-pill shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i>Tạo thăm dò mới
+            </a>
+        </div>
+
+        <div id="loading-spinner" class="text-center py-5">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted fw-semibold">Đang tải danh sách cuộc thăm dò của bạn...</p>
+        </div>
+
+        <div id="empty-state" class="text-center py-5 d-none bg-white rounded-4 shadow-sm p-5">
+            <i class="bi bi-inbox text-muted display-1"></i>
+            <h4 class="fw-bold mt-3">Bạn chưa tạo cuộc thăm dò nào</h4>
+            <p class="text-muted">Hãy bắt đầu tạo cuộc thăm dò đầu tiên để khảo sát ý kiến cộng đồng ngay nhé!</p>
+            <a href="index.html" class="btn btn-warning btn-lg fw-bold rounded-pill shadow-sm px-4 mt-2">
+                Tạo cuộc thăm dò ngay
+            </a>
+        </div>
+
+        <div id="polls-list" class="row g-4"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="navbar.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!window.PollAuth.isLoggedIn()) {
+                window.showAuthRequiredModal("Vui lòng đăng nhập để xem danh sách các cuộc thăm dò của bạn.");
+                document.getElementById("loading-spinner").classList.add("d-none");
+                document.getElementById("empty-state").classList.remove("d-none");
+                return;
+            }
+
+            await loadMyPolls();
+        });
+
+        async function loadMyPolls() {
+            try {
+                const res = await fetch("/api/polls/my-polls", {
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                if (!res.ok) throw new Error("Không thể tải danh sách cuộc thăm dò.");
+
+                const polls = await res.json();
+                document.getElementById("loading-spinner").classList.add("d-none");
+                const listContainer = document.getElementById("polls-list");
+                listContainer.innerHTML = '';
+
+                if (!polls || polls.length === 0) {
+                    document.getElementById("empty-state").classList.remove("d-none");
+                    return;
+                }
+
+                polls.forEach(poll => {
+                    const statusBadge = poll.isClosed
+                        ? '<span class="badge bg-secondary">🔒 Đã đóng</span>'
+                        : (poll.isExpired ? '<span class="badge bg-danger">⏰ Hết hạn</span>' : '<span class="badge bg-success">🟢 Đang hoạt động</span>');
+
+                    const col = document.createElement("div");
+                    col.className = "col-md-6 col-lg-4";
+                    col.innerHTML = `
+                        <div class="card card-poll shadow-sm h-100 p-4 bg-white d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge-type small">
+                                        <i class="bi bi-tag-fill me-1"></i>${poll.questionType === 'MultipleChoice' ? 'Trắc nghiệm' : 'Đơn giản'}
+                                    </span>
+                                    ${statusBadge}
+                                </div>
+                                <h4 class="fw-bold text-dark mb-2">${escapeHtml(poll.title)}</h4>
+                                <p class="text-muted small mb-3">
+                                    <i class="bi bi-calendar-event me-1"></i>Tạo ngày: ${new Date(poll.createdAt).toLocaleDateString('vi-VN')}
+                                </p>
+                                <div class="bg-light p-3 rounded-3 mb-3 d-flex align-items-center justify-content-between">
+                                    <span class="text-muted fw-semibold">Mã thăm dò:</span>
+                                    <span class="badge bg-dark fs-6 px-3 py-2 font-monospace">${poll.code}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 mb-4">
+                                    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                    <span class="fw-bold text-dark fs-5">${poll.totalVotes}</span>
+                                    <span class="text-muted">lượt bình chọn</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2 border-top pt-3">
+                                <a href="results.html?code=${poll.code}" class="btn btn-primary fw-semibold rounded-pill w-100">
+                                    <i class="bi bi-bar-chart-fill me-2"></i>Xem Kết Quả Live
+                                </a>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-secondary fw-semibold rounded-pill flex-grow-1" onclick="copyPollLink('${poll.code}')">
+                                        <i class="bi bi-clipboard me-1"></i>Sao chép link
+                                    </button>
+                                    <a href="analytics.html?code=${poll.code}" class="btn btn-outline-info fw-semibold rounded-pill flex-grow-1">
+                                        <i class="bi bi-graph-up-arrow me-1"></i>Phân tích
+                                    </a>
+                                </div>
+                                ${!poll.isClosed ? `
+                                    <button class="btn btn-outline-danger btn-sm fw-semibold rounded-pill w-100 mt-1" onclick="closePoll('${poll.code}')">
+                                        <i class="bi bi-lock-fill me-1"></i>Đóng cuộc thăm dò này
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    listContainer.appendChild(col);
+                });
+            } catch (err) {
+                document.getElementById("loading-spinner").classList.add("d-none");
+                alert(err.message);
+            }
+        }
+
+        async function closePoll(code) {
+            if (!confirm(`Bạn có chắc chắn muốn ĐÓNG cuộc thăm dò (${code}) không? Khi đã đóng, mọi người sẽ không thể vote thêm.`)) return;
+
+            try {
+                const res = await fetch(`/api/polls/${code}/close`, {
+                    method: 'POST',
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || "Không thể đóng cuộc thăm dò.");
+
+                alert(data.message || "Đã đóng cuộc thăm dò thành công.");
+                await loadMyPolls();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function copyPollLink(code) {
+            const url = `${window.location.origin}/poll.html?code=${code}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Đã sao chép liên kết bỏ phiếu: " + url);
+            });
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>

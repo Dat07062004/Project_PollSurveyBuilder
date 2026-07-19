@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&A Live - Anonymous Question & Answer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="fw-bold brand-title mb-0"><i class="bi bi-chat-quote-fill me-2"></i>Q&A Live (Hỏi & Đáp Ẩn Danh)</h2>
+          <a id="resultsLink" href="#" class="btn btn-outline-light btn-sm"><i class="bi bi-bar-chart-fill me-1"></i>Trang Results</a>
+        </div>
+
+        <!-- Submit Question Card -->
+        <div class="glass-card p-4 mb-4">
+          <h5 class="fw-bold mb-3"><i class="bi bi-send-fill text-info me-2"></i>Đặt Câu Hỏi Cho Diễn Giả / Người Tạo</h5>
+          <form id="qnaForm">
+            <div class="input-group">
+              <input type="text" id="qnaInput" class="form-control form-control-lg bg-dark text-white border-secondary" placeholder="Nhập câu hỏi của bạn tại đây..." required>
+              <button type="submit" class="btn btn-gradient btn-lg px-4"><i class="bi bi-paperplane-fill me-1"></i>Gửi</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Questions List Container -->
+        <div id="questionsContainer" class="d-flex flex-column gap-3">
+          <!-- Dynamically populated Q&A questions -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:5000/api/polls';
+    const HUB_URL = 'http://localhost:5000/hubs/poll';
+    const urlParams = new URLSearchParams(window.location.search);
+    const pollCode = urlParams.get('code');
+
+    if (!pollCode) {
+      alert('Mã poll không hợp lệ.');
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('resultsLink').href = `results.html?code=${pollCode}`;
+
+    let questionsList = [];
+
+    async function loadQuestions() {
+      try {
+        const resp = await fetch(`${API_BASE}/${pollCode}/qna`);
+        if (resp.ok) {
+          questionsList = await resp.json();
+          renderQuestions();
+        }
+      } catch (err) {
+        console.error('Failed to load Q&A questions', err);
+      }
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      container.innerHTML = '';
+
+      if (questionsList.length === 0) {
+        container.innerHTML = `
+          <div class="glass-card p-4 text-center text-muted">
+            <i class="bi bi-chat-left-dots fs-1 d-block mb-2 text-secondary"></i>
+            Chưa có câu hỏi nào. Hãy là người đầu tiên đặt câu hỏi!
+          </div>
+        `;
+        return;
+      }
+
+      questionsList.forEach(q => {
+        const div = document.createElement('div');
+        div.className = `glass-card p-4 qna-card ${q.isPinned ? 'pinned' : ''}`;
+        div.innerHTML = `
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex align-items-center gap-2">
+              ${q.isPinned ? '<span class="badge bg-warning text-dark"><i class="bi bi-pin-angle-fill me-1"></i>Đã Ghim (Pinned)</span>' : ''}
+              <span class="text-secondary small"><i class="bi bi-clock me-1"></i>${new Date(q.createdAt).toLocaleTimeString()}</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-outline-warning btn-sm pin-btn" data-id="${q.id}">
+                <i class="bi bi-pin-angle me-1"></i>${q.isPinned ? 'Bỏ ghim' : 'Ghim'}
+              </button>
+              <button class="btn btn-outline-success btn-sm upvote-btn" data-id="${q.id}">
+                <i class="bi bi-hand-thumbs-up-fill me-1"></i>${q.upvotes} Upvotes
+              </button>
+            </div>
+          </div>
+          <p class="fs-5 fw-semibold mb-0">${q.questionText}</p>
+        `;
+
+        div.querySelector('.upvote-btn').addEventListener('click', async () => {
+          await fetch(`${API_BASE}/${pollCode}/qna/${q.id}/upvote`, { method: 'POST' });
+        });
+
+        div.querySelector('.pin-btn').addEventListener('click', async () => {
+          await fetch(`${API_BASE}/${pollCode}/qna/${q.id}/pin`, { method: 'POST' });
+        });
+
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById('qnaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = document.getElementById('qnaInput').value.trim();
+      if (!text) return;
+
+      try {
+        const resp = await fetch(`${API_BASE}/${pollCode}/qna`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ questionText: text })
+        });
+
+        if (resp.ok) {
+          document.getElementById('qnaInput').value = '';
+        } else {
+          alert('Không thể gửi câu hỏi.');
+        }
+      } catch (err) {
+        alert('Lỗi kết nối khi gửi câu hỏi.');
+      }
+    });
+
+    // SignalR Live Connection
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(HUB_URL)
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on("ReceiveQnAUpdate", (qna) => {
+      const idx = questionsList.findIndex(item => item.id === qna.id);
+      if (idx !== -1) {
+        questionsList[idx] = qna;
+      } else {
+        questionsList.push(qna);
+      }
+
+      questionsList.sort((a, b) => {
+        if (a.isPinned !== b.isPinned) return b.isPinned ? 1 : -1;
+        if (a.upvotes !== b.upvotes) return b.upvotes - a.upvotes;
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      renderQuestions();
+    });
+
+    connection.start().then(() => {
+      connection.invoke("JoinPollGroup", pollCode);
+    }).catch(err => console.error("SignalR Connection Error:", err));
+
+    loadQuestions();
+  </script>
+</body>
+</html>

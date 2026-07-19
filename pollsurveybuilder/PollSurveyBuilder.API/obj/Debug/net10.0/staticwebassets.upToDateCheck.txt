@@ -1,0 +1,12 @@
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\results.html
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\poll.html
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\analytics.html
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\index.html
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\styles.css
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.API\wwwroot\qna.html
+wwwroot\analytics.html
+wwwroot\index.html
+wwwroot\poll.html
+wwwroot\qna.html
+wwwroot\results.html
+wwwroot\styles.css

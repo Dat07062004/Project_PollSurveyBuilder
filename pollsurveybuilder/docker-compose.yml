@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pollsurvey-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongPassw0rd!
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    networks:
+      - pollsurvey-net
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrongPassw0rd!' -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: pollsurvey-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - pollsurvey-net
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pollsurvey-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PollSurveyDb;User Id=sa;Password=YourStrongPassw0rd!;TrustServerCertificate=True;
+      - ConnectionStrings__Redis=redis:6379
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - pollsurvey-net
+
+  web:
+    build:
+      context: .
+      dockerfile: PollSurveyBuilder.Web/Dockerfile
+    container_name: pollsurvey-web
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    networks:
+      - pollsurvey-net
+
+networks:
+  pollsurvey-net:
+    driver: bridge

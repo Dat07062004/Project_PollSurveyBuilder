@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="PollSurveyBuilder.API/PollSurveyBuilder.API.csproj" />
+  <Project Path="PollSurveyBuilder.Application/PollSurveyBuilder.Application.csproj" />
+  <Project Path="PollSurveyBuilder.Common/PollSurveyBuilder.Common.csproj" />
+  <Project Path="PollSurveyBuilder.Domain/PollSurveyBuilder.Domain.csproj" />
+  <Project Path="PollSurveyBuilder.Infrastructure/PollSurveyBuilder.Infrastructure.csproj" />
+  <Project Path="PollSurveyBuilder.Web/PollSurveyBuilder.Web.csproj" />
+  <Project Path="PollSurveyBuilder.Tests/PollSurveyBuilder.Tests.csproj" />
+</Solution>

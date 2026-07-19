@@ -1,0 +1,11 @@
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\bin\Debug\net8.0\PollSurveyBuilder.Common.deps.json
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\bin\Debug\net8.0\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\bin\Debug\net8.0\PollSurveyBuilder.Common.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.AssemblyInfoInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.AssemblyInfo.cs
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.csproj.CoreCompileInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\refint\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\PollSurveyBuilder.Common.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\pollsurveybuilder\PollSurveyBuilder.Common\obj\Debug\net8.0\ref\PollSurveyBuilder.Common.dll
