@@ -53,12 +53,12 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link ${activePath === 'index.html' ? 'active fw-bold' : ''}" href="index.html">
-                                    <i class="bi bi-plus-circle me-1"></i>Tạo thăm dò
+                                    <i class="bi bi-plus-circle me-1"></i>Create Poll
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link ${activePath === 'mypolls.html' ? 'active fw-bold' : ''}" href="mypolls.html" id="nav-mypolls-link">
-                                    <i class="bi bi-collection-fill me-1"></i>Danh sách các cuộc thăm dò
+                                    <i class="bi bi-collection-fill me-1"></i>My Polls
                                 </a>
                             </li>
                         </ul>
@@ -74,13 +74,13 @@
                                     <ul class="dropdown-menu dropdown-menu-end shadow">
                                         <li><span class="dropdown-item-text text-muted small"><i class="bi bi-envelope me-1"></i>${user.email}</span></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="mypolls.html"><i class="bi bi-list-task me-2"></i>Polls của tôi</a></li>
-                                        <li><button class="dropdown-item text-danger" id="btn-logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button></li>
+                                        <li><a class="dropdown-item" href="mypolls.html"><i class="bi bi-list-task me-2"></i>My Polls</a></li>
+                                        <li><button class="dropdown-item text-danger" id="btn-logout"><i class="bi bi-box-arrow-right me-2"></i>Log Out</button></li>
                                     </ul>
                                 </div>
                             ` : `
                                 <button class="btn btn-warning fw-bold text-dark shadow-sm px-3" data-bs-toggle="modal" data-bs-target="#authModal">
-                                    <i class="bi bi-person-fill me-1"></i>Đăng nhập / Đăng ký
+                                    <i class="bi bi-person-fill me-1"></i>Log In / Register
                                 </button>
                             `}
                         </div>
@@ -99,7 +99,7 @@
             myPollsLink.addEventListener("click", (e) => {
                 if (!window.PollAuth.isLoggedIn()) {
                     e.preventDefault();
-                    showAuthRequiredModal("Vui lòng đăng nhập để xem danh sách các cuộc thăm dò của bạn.");
+                    showAuthRequiredModal("Please log in to view your polls.");
                 }
             });
         }
@@ -115,7 +115,7 @@
                     <div class="modal-content border-0 shadow-lg rounded-4">
                         <div class="modal-header border-0 bg-primary text-white rounded-top-4">
                             <h5 class="modal-title fw-bold" id="authModalLabel">
-                                <i class="bi bi-shield-lock-fill me-2"></i>Tài khoản Poll & Survey
+                                <i class="bi bi-shield-lock-fill me-2"></i>Poll & Survey Account
                             </h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -125,65 +125,65 @@
                             <ul class="nav nav-pills nav-justified mb-4" id="authTab" role="tablist">
                                 <li class="nav-item">
                                     <button class="nav-link active fw-bold" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-pane">
-                                        <i class="bi bi-box-arrow-in-right me-1"></i>Đăng nhập
+                                        <i class="bi bi-box-arrow-in-right me-1"></i>Log In
                                     </button>
                                 </li>
                                 <li class="nav-item">
                                     <button class="nav-link fw-bold" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-pane">
-                                        <i class="bi bi-person-plus-fill me-1"></i>Đăng ký
+                                        <i class="bi bi-person-plus-fill me-1"></i>Register
                                     </button>
                                 </li>
                             </ul>
 
                             <div class="tab-content" id="authTabContent">
-                                <!-- Tab Đăng nhập -->
+                                <!-- Log In Tab -->
                                 <div class="tab-pane fade show active" id="login-pane">
                                     <form id="form-login">
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Gmail hoặc Tên đăng nhập</label>
-                                            <input type="text" id="login-username" class="form-control form-control-lg" placeholder="nhap@gmail.com hoặc username" required>
+                                            <label class="form-label fw-semibold">Email or Username</label>
+                                            <input type="text" id="login-username" class="form-control form-control-lg" placeholder="email@example.com or username" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Mật khẩu</label>
+                                            <label class="form-label fw-semibold">Password</label>
                                             <input type="password" id="login-password" class="form-control form-control-lg" placeholder="••••••••" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm mb-3">
-                                            Đăng nhập ngay
+                                            Log In Now
                                         </button>
                                     </form>
 
                                     <div class="text-center position-relative my-4">
                                         <hr>
-                                        <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">hoặc</span>
+                                        <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">or</span>
                                     </div>
 
                                     <button type="button" id="btn-google-login" class="btn btn-outline-danger btn-lg w-100 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
-                                        <i class="bi bi-google fs-5"></i>Đăng nhập bằng Gmail (Google)
+                                        <i class="bi bi-google fs-5"></i>Sign in with Google
                                     </button>
                                 </div>
 
-                                <!-- Tab Đăng ký -->
+                                <!-- Register Tab -->
                                 <div class="tab-pane fade" id="register-pane">
                                     <form id="form-register">
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Gmail <span class="text-danger">*</span></label>
-                                            <input type="email" id="reg-email" class="form-control" placeholder="vidu@gmail.com" required>
-                                            <div class="form-text">Mỗi Gmail chỉ được sử dụng cho 1 tài khoản duy nhất.</div>
+                                            <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                            <input type="email" id="reg-email" class="form-control" placeholder="user@example.com" required>
+                                            <div class="form-text">Each email can only be registered once.</div>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Tên đăng nhập (Username) <span class="text-danger">*</span></label>
-                                            <input type="text" id="reg-username" class="form-control" placeholder="nguyenvana" required>
+                                            <label class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+                                            <input type="text" id="reg-username" class="form-control" placeholder="john_doe" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Mật khẩu <span class="text-danger">*</span></label>
-                                            <input type="password" id="reg-password" class="form-control" placeholder="Tối thiểu 6 ký tự" required>
+                                            <label class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                            <input type="password" id="reg-password" class="form-control" placeholder="At least 6 characters" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-semibold">Xác nhận Mật khẩu <span class="text-danger">*</span></label>
-                                            <input type="password" id="reg-confirm" class="form-control" placeholder="Nhập lại mật khẩu" required>
+                                            <label class="form-label fw-semibold">Confirm Password <span class="text-danger">*</span></label>
+                                            <input type="password" id="reg-confirm" class="form-control" placeholder="Re-enter password" required>
                                         </div>
                                         <button type="submit" class="btn btn-success btn-lg w-100 fw-bold shadow-sm">
-                                            Tạo tài khoản mới
+                                            Create Account
                                         </button>
                                     </form>
                                 </div>
@@ -230,7 +230,7 @@
                         body: JSON.stringify({ usernameOrEmail, password })
                     });
                     const data = await parseResponse(res);
-                    if (!res.ok) throw new Error(data.message || `Đăng nhập thất bại (Mã lỗi ${res.status}). Vui lòng đảm bảo đã khởi chạy cả API và Web trong Visual Studio.`);
+                    if (!res.ok) throw new Error(data.message || `Login failed (Status ${res.status}). Please check API and Web dev servers.`);
 
                     window.PollAuth.setAuth(data.token, { id: data.userId, username: data.username, email: data.email });
                 } catch (err) {
@@ -249,7 +249,7 @@
                 const confirmPassword = document.getElementById("reg-confirm").value;
 
                 if (password !== confirmPassword) {
-                    showError("Mật khẩu xác nhận không trùng khớp.");
+                    showError("Passwords do not match.");
                     return;
                 }
 
@@ -260,7 +260,7 @@
                         body: JSON.stringify({ email, username, password, confirmPassword })
                     });
                     const data = await parseResponse(res);
-                    if (!res.ok) throw new Error(data.message || `Đăng ký thất bại (Mã lỗi ${res.status}). Vui lòng đảm bảo đã khởi chạy cả API và Web trong Visual Studio.`);
+                    if (!res.ok) throw new Error(data.message || `Registration failed (Status ${res.status}). Please check API and Web dev servers.`);
 
                     window.PollAuth.setAuth(data.token, { id: data.userId, username: data.username, email: data.email });
                 } catch (err) {
@@ -272,11 +272,11 @@
         if (btnGoogle) {
             btnGoogle.addEventListener("click", async () => {
                 authAlert.classList.add("d-none");
-                const emailPrompt = prompt("Nhập Gmail của bạn để đăng nhập nhanh bằng Google:", "user@gmail.com");
+                const emailPrompt = prompt("Enter your Gmail address for quick Google login:", "user@gmail.com");
                 if (!emailPrompt) return;
 
                 if (!emailPrompt.includes("@") || (!emailPrompt.toLowerCase().endsWith("gmail.com") && !emailPrompt.includes("."))) {
-                    showError("Vui lòng nhập định dạng Gmail hợp lệ.");
+                    showError("Please enter a valid email address.");
                     return;
                 }
 
@@ -287,7 +287,7 @@
                         body: JSON.stringify({ email: emailPrompt, name: emailPrompt.split("@")[0] })
                     });
                     const data = await parseResponse(res);
-                    if (!res.ok) throw new Error(data.message || `Đăng nhập bằng Gmail thất bại (Mã lỗi ${res.status}).`);
+                    if (!res.ok) throw new Error(data.message || `Google sign-in failed (Status ${res.status}).`);
 
                     window.PollAuth.setAuth(data.token, { id: data.userId, username: data.username, email: data.email });
                 } catch (err) {
@@ -300,7 +300,7 @@
     window.showAuthRequiredModal = function (msg) {
         const authAlert = document.getElementById("auth-alert");
         if (authAlert) {
-            authAlert.innerText = msg || "Vui lòng đăng nhập hoặc đăng ký tài khoản để tiếp tục.";
+            authAlert.innerText = msg || "Please log in or register an account to continue.";
             authAlert.classList.remove("d-none");
         }
         const modalEl = document.getElementById("authModal");

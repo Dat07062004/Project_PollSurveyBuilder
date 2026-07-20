@@ -53,6 +53,7 @@ public static class InfrastructureDependencyInjection
 
         services.AddScoped<ICacheService, RedisCacheService>();
         services.AddScoped<IRealtimeNotificationService, SignalRNotificationService>();
+        services.AddScoped<IQrCodeService, QrCodeService>();
 
         return services;
     }

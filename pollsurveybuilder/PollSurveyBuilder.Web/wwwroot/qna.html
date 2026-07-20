@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A Live (Hỏi & Đáp Ẩn Danh) - Poll & Survey Builder</title>
+    <title>Live Q&A - Poll & Survey Builder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,28 +26,28 @@
                         <span class="badge bg-info text-white fs-6 px-3 py-2"><i class="bi bi-chat-left-dots-fill me-1"></i>Distinction Live Q&A</span>
                     </div>
 
-                    <h2 class="fw-bold text-dark mb-4">Hỏi & Đáp Ẩn Danh Trực Tiếp</h2>
+                    <h2 class="fw-bold text-dark mb-4">Live Anonymous Q&A</h2>
 
-                    <!-- Form Đặt Câu Hỏi -->
+                    <!-- Ask Question Form -->
                     <form id="qna-form" class="mb-5">
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Đặt câu hỏi cho diễn giả / chủ cuộc họp:</label>
-                            <textarea id="question-text" class="form-control form-control-lg border-2" rows="3" placeholder="Nhập câu hỏi của bạn ở đây..." required></textarea>
+                            <label class="form-label fw-bold">Ask a question to the host/speaker:</label>
+                            <textarea id="question-text" class="form-control form-control-lg border-2" rows="3" placeholder="Type your question here..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-pill px-4 shadow">
-                            <i class="bi bi-send-fill me-2"></i>Gửi Câu Hỏi
+                            <i class="bi bi-send-fill me-2"></i>Submit Question
                         </button>
                     </form>
 
-                    <h4 class="fw-bold mb-3"><i class="bi bi-question-circle-fill text-primary me-2"></i>Danh sách câu hỏi:</h4>
+                    <h4 class="fw-bold mb-3"><i class="bi bi-question-circle-fill text-primary me-2"></i>Questions:</h4>
                     <div id="qna-list" class="d-flex flex-column gap-3 mb-4"></div>
 
                     <div class="mt-4 pt-3 border-top d-flex justify-content-between">
                         <a id="link-poll" href="#" class="btn btn-outline-secondary fw-bold rounded-pill">
-                            <i class="bi bi-arrow-left me-1"></i>Trang Bình Chọn
+                            <i class="bi bi-arrow-left me-1"></i>Voting Page
                         </a>
                         <a id="link-results" href="#" class="btn btn-primary fw-bold rounded-pill">
-                            <i class="bi bi-bar-chart-fill me-1"></i>Xem kết quả Live
+                            <i class="bi bi-bar-chart-fill me-1"></i>View Live Results
                         </a>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
-    <script src="navbar.js"></script>
+    <script src="navbar.js?v=2"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -70,7 +70,7 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             if (!code) {
-                alert("Thiếu mã cuộc thăm dò!");
+                alert("Missing poll code!");
                 window.location.href = "index.html";
                 return;
             }
@@ -88,7 +88,7 @@
                 const res = await fetch(`/api/polls/${code}/qna`, {
                     headers: window.PollAuth.getAuthHeaders()
                 });
-                if (!res.ok) throw new Error("Không thể tải danh sách Q&A.");
+                if (!res.ok) throw new Error("Cannot load Q&A list.");
 
                 const questions = await res.json();
                 renderQuestions(questions);
@@ -102,7 +102,7 @@
             list.innerHTML = '';
 
             if (!questions || questions.length === 0) {
-                list.innerHTML = '<p class="text-muted italic py-3 text-center">Chưa có câu hỏi nào. Hãy là người đầu tiên đặt câu hỏi!</p>';
+                list.innerHTML = '<p class="text-muted italic py-3 text-center">No questions yet. Be the first to ask!</p>';
                 return;
             }
 
@@ -112,16 +112,16 @@
                 div.innerHTML = `
                     <div class="d-flex justify-content-between align-items-start gap-3">
                         <div>
-                            ${q.isPinned ? '<span class="badge bg-primary mb-2"><i class="bi bi-pin-angle-fill me-1"></i>Đã ghim</span>' : ''}
+                            ${q.isPinned ? '<span class="badge bg-primary mb-2"><i class="bi bi-pin-angle-fill me-1"></i>Pinned</span>' : ''}
                             <p class="fs-5 fw-semibold text-dark mb-1">${escapeHtml(q.questionText)}</p>
-                            <span class="text-muted small">${new Date(q.createdAt).toLocaleTimeString('vi-VN')}</span>
+                            <span class="text-muted small">${new Date(q.createdAt).toLocaleTimeString()}</span>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <button class="btn btn-outline-primary btn-sm fw-bold rounded-pill" onclick="upvoteQuestion('${q.id}')">
                                 <i class="bi bi-hand-thumbs-up-fill me-1"></i>${q.upvotes}
                             </button>
                             <button class="btn btn-outline-warning btn-sm fw-bold rounded-pill" onclick="togglePinQuestion('${q.id}')">
-                                <i class="bi bi-pin-angle-fill me-1"></i>${q.isPinned ? 'Bỏ ghim' : 'Ghim'}
+                                <i class="bi bi-pin-angle-fill me-1"></i>${q.isPinned ? 'Unpin' : 'Pin'}
                             </button>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                     await loadQuestions();
                 } else {
                     const err = await res.json();
-                    alert(err.message || "Không thể gửi câu hỏi.");
+                    alert(err.message || "Failed to submit question.");
                 }
             } catch (err) {
                 alert(err.message);

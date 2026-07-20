@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kết Quả Live Realtime - Poll & Survey Builder</title>
+    <title>Live Realtime Results - Poll & Survey Builder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,8 +11,8 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
         .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
-        .progress { height: 28px; border-radius: 14px; background-color: #eef2ff; }
-        .progress-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 700; font-size: 0.9rem; }
+        .progress { height: 28px; border-radius: 0; background-color: #e2e8f0; }
+        .progress-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 700; font-size: 0.9rem; border-radius: 0; }
     </style>
 </head>
 <body>
@@ -33,7 +33,7 @@
                     <h2 id="poll-title" class="fw-bold text-dark mb-4"></h2>
 
                     <div class="bg-light p-3 rounded-4 mb-4 d-flex align-items-center justify-content-between">
-                        <span class="text-muted fw-bold">Tổng số phiếu bầu:</span>
+                        <span class="text-muted fw-bold">Total Votes:</span>
                         <span id="total-votes" class="badge bg-primary fs-5 px-4 py-2">0</span>
                     </div>
 
@@ -43,23 +43,23 @@
                     </div>
 
                     <!-- Progress Bars List -->
-                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-list-task text-primary me-2"></i>Chi tiết các lượt vote:</h5>
+                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-list-task text-primary me-2"></i>Vote Breakdown:</h5>
                     <div id="results-list" class="d-flex flex-column gap-4 mb-4"></div>
 
                     <div id="open-responses-section" class="d-none mt-4">
-                        <h4 class="fw-bold mb-3"><i class="bi bi-chat-quote-fill me-2 text-primary"></i>Các ý kiến tự do:</h4>
+                        <h4 class="fw-bold mb-3"><i class="bi bi-chat-quote-fill me-2 text-primary"></i>Open Responses:</h4>
                         <div id="open-responses-list" class="d-flex flex-column gap-2"></div>
                     </div>
 
                     <div class="mt-4 pt-3 border-top d-flex flex-wrap gap-2 justify-content-between">
                         <a id="link-poll" href="#" class="btn btn-outline-secondary fw-bold rounded-pill">
-                            <i class="bi bi-arrow-left me-1"></i>Trang Bình Chọn
+                            <i class="bi bi-arrow-left me-1"></i>Voting Page
                         </a>
                         <a id="link-qna" href="#" class="btn btn-outline-info fw-bold rounded-pill">
-                            <i class="bi bi-chat-dots-fill me-1"></i>Hỏi & Đáp (Q&A)
+                            <i class="bi bi-chat-dots-fill me-1"></i>Live Q&A
                         </a>
                         <a id="link-analytics" href="#" class="btn btn-info text-white fw-bold rounded-pill">
-                            <i class="bi bi-graph-up-arrow me-1"></i>Phân tích
+                            <i class="bi bi-graph-up-arrow me-1"></i>Analytics
                         </a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
-    <script src="navbar.js"></script>
+    <script src="navbar.js?v=2"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -77,13 +77,13 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             if (!code) {
-                alert("Thiếu mã cuộc thăm dò!");
+                alert("Missing poll code!");
                 window.location.href = "index.html";
                 return;
             }
 
             if (!window.PollAuth.isLoggedIn()) {
-                window.showAuthRequiredModal("Vui lòng đăng nhập để xem trang kết quả trực tiếp.");
+                window.showAuthRequiredModal("Please log in to view live results.");
                 return;
             }
 
@@ -101,7 +101,7 @@
                 const res = await fetch(`/api/polls/${code}/results`, {
                     headers: window.PollAuth.getAuthHeaders()
                 });
-                if (!res.ok) throw new Error("Không thể tải kết quả.");
+                if (!res.ok) throw new Error("Cannot load results.");
 
                 const data = await res.json();
                 renderResults(data);
@@ -117,8 +117,15 @@
             const list = document.getElementById('results-list');
             list.innerHTML = '';
 
-            const colors = ['#4f46e5', '#10b981', '#06b6d4', '#f59e0b', '#ef4444', '#1f2937'];
-            const bgClasses = ['bg-primary', 'bg-success', 'bg-info', 'bg-warning', 'bg-danger', 'bg-dark'];
+            const colors = [
+                '#1d4ed8', // Bold Royal Blue
+                '#047857', // Bold Deep Emerald
+                '#0284c7', // Bold Cyan/Teal
+                '#b45309', // Bold Amber/Bronze
+                '#b91c1c', // Bold Crimson Red
+                '#6d28d9', // Bold Deep Purple
+                '#0f172a'  // Bold Dark Slate
+            ];
 
             const labels = [];
             const voteCounts = [];
@@ -128,17 +135,17 @@
                 data.options.forEach((opt, idx) => {
                     labels.push(opt.optionText);
                     voteCounts.push(opt.voteCount);
-                    bgColors.push(colors[idx % colors.length]);
+                    const colorHex = colors[idx % colors.length];
+                    bgColors.push(colorHex);
 
-                    const colorClass = bgClasses[idx % bgClasses.length];
                     const div = document.createElement('div');
                     div.innerHTML = `
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="fw-bold fs-6 text-dark">${escapeHtml(opt.optionText)}</span>
-                            <span class="fw-bold text-muted">${opt.voteCount} phiếu (${opt.percentage}%)</span>
+                            <span class="fw-bold text-dark">${opt.voteCount} votes (${opt.percentage}%)</span>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar ${colorClass}" role="progressbar" style="width: ${opt.percentage}%">
+                        <div class="progress" style="border-radius: 0; height: 28px; background-color: #e2e8f0;">
+                            <div class="progress-bar" role="progressbar" style="width: ${opt.percentage}%; background-color: ${colorHex}; border-radius: 0;">
                                 ${opt.percentage > 5 ? opt.percentage + '%' : ''}
                             </div>
                         </div>
@@ -176,10 +183,11 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Số phiếu bầu',
+                            label: 'Vote Count',
                             data: data,
                             backgroundColor: colors,
-                            borderRadius: 8
+                            borderRadius: 0,
+                            borderWidth: 0
                         }]
                     },
                     options: {

@@ -16,17 +16,20 @@ public class PollsController : ControllerBase
     private readonly IVoteService _voteService;
     private readonly IQnAService _qnaService;
     private readonly IAuthService _authService;
+    private readonly IQrCodeService _qrCodeService;
 
     public PollsController(
         IPollService pollService,
         IVoteService voteService,
         IQnAService qnaService,
-        IAuthService authService)
+        IAuthService authService,
+        IQrCodeService qrCodeService)
     {
         _pollService = pollService;
         _voteService = voteService;
         _qnaService = qnaService;
         _authService = authService;
+        _qrCodeService = qrCodeService;
     }
 
     [HttpPost]
@@ -42,7 +45,7 @@ public class PollsController : ControllerBase
     public async Task<IActionResult> GetMyPolls()
     {
         var userId = GetCurrentUserId();
-        if (!userId.HasValue) return Unauthorized(new { message = "Vui lòng đăng nhập để xem danh sách cuộc thăm dò." });
+        if (!userId.HasValue) return Unauthorized(new { message = "Please log in to view your polls." });
 
         var polls = await _authService.GetUserPollsAsync(userId.Value);
         return Ok(polls);
@@ -52,8 +55,24 @@ public class PollsController : ControllerBase
     public async Task<IActionResult> GetPollByCode(string code)
     {
         var poll = await _pollService.GetPollByCodeAsync(code);
-        if (poll == null) return NotFound(new { message = "Không tìm thấy cuộc thăm dò." });
+        if (poll == null) return NotFound(new { message = "Poll not found." });
         return Ok(poll);
+    }
+
+    [HttpGet("{code}/qr")]
+    public IActionResult GetPollQrCode(string code)
+    {
+        string pollUrl = $"{Request.Scheme}://{Request.Host}/poll.html?code={code}";
+        byte[] qrBytes = _qrCodeService.GeneratePng(pollUrl);
+        return File(qrBytes, "image/png");
+    }
+
+    [HttpGet("{code}/qr-base64")]
+    public IActionResult GetPollQrCodeBase64(string code)
+    {
+        string pollUrl = $"{Request.Scheme}://{Request.Host}/poll.html?code={code}";
+        string base64 = _qrCodeService.GenerateBase64(pollUrl);
+        return Ok(new { code = code, pollUrl = pollUrl, qrCodeBase64 = base64 });
     }
 
     [HttpPost("{code}/vote")]
@@ -149,6 +168,43 @@ public class PollsController : ControllerBase
         return Ok(new { success = true });
     }
 
+    [HttpPut("{code}")]
+    [Authorize]
+    public async Task<IActionResult> UpdatePoll(string code, [FromBody] UpdatePollRequest dto)
+    {
+        var userId = GetCurrentUserId();
+        try
+        {
+            var result = await _pollService.UpdatePollAsync(code, dto, userId);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    [HttpDelete("{code}")]
+    [Authorize]
+    public async Task<IActionResult> DeletePoll(string code)
+    {
+        var userId = GetCurrentUserId();
+        try
+        {
+            var success = await _pollService.DeletePollAsync(code, userId);
+            if (!success) return NotFound(new { message = "Poll not found." });
+            return Ok(new { success = true, message = "Poll deleted successfully." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
     [HttpPost("{code}/close")]
     [Authorize]
     public async Task<IActionResult> ClosePoll(string code)
@@ -158,7 +214,7 @@ public class PollsController : ControllerBase
         {
             var success = await _pollService.ClosePollAsync(code, userId);
             if (!success) return NotFound();
-            return Ok(new { success = true, message = "Đã đóng cuộc thăm dò thành công." });
+            return Ok(new { success = true, message = "Poll closed successfully." });
         }
         catch (UnauthorizedAccessException ex)
         {
