@@ -178,8 +178,8 @@ public class PollService : IPollService
             IsClosed = poll.IsClosed,
             IsExpired = isExpired,
             IsActive = !poll.IsClosed && !isExpired,
-            ExpiresAt = poll.ExpiresAt,
-            CreatedAt = poll.CreatedAt,
+            ExpiresAt = poll.ExpiresAt.HasValue ? DateTime.SpecifyKind(poll.ExpiresAt.Value, DateTimeKind.Utc) : null,
+            CreatedAt = DateTime.SpecifyKind(poll.CreatedAt, DateTimeKind.Utc),
             Options = poll.Options.OrderBy(o => o.OptionIndex).Select(o => new PollOptionDto
             {
                 Id = o.Id,

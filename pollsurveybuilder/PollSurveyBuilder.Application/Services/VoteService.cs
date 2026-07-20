@@ -125,7 +125,7 @@ public class VoteService : IVoteService
             IsClosed = poll.IsClosed,
             IsExpired = pollIsExpired,
             TotalVotes = totalVotes,
-            ExpiresAt = poll.ExpiresAt,
+            ExpiresAt = poll.ExpiresAt.HasValue ? DateTime.SpecifyKind(poll.ExpiresAt.Value, DateTimeKind.Utc) : null,
             Options = optionResults,
             OpenTextResponses = textResponses
         };
@@ -142,7 +142,7 @@ public class VoteService : IVoteService
         var votes = await _voteRepository.GetVotesByPollIdAsync(poll.Id);
 
         var timeSeries = votes
-            .GroupBy(v => v.VotedAt.ToString("yyyy-MM-dd HH:mm"))
+            .GroupBy(v => DateTime.SpecifyKind(v.VotedAt, DateTimeKind.Utc).ToLocalTime().ToString("yyyy-MM-dd HH:mm"))
             .Select(g => new TimeSeriesVotePoint
             {
                 TimeLabel = g.Key,

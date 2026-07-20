@@ -87,6 +87,6 @@ public class QnAService : IQnAService
         QuestionText = q.QuestionText,
         Upvotes = q.Upvotes,
         IsPinned = q.IsPinned,
-        CreatedAt = q.CreatedAt
+        CreatedAt = DateTime.SpecifyKind(q.CreatedAt, DateTimeKind.Utc)
     };
 }

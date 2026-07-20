@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PollSurveyBuilder.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03d9b6fe7661060cd1af9fbf98d37fc993ac4807")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3dd1ed8d955b294e2159867bf738ef19d14535d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PollSurveyBuilder.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PollSurveyBuilder.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

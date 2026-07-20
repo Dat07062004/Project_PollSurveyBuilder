@@ -6,11 +6,11 @@ wwwroot\poll.html
 wwwroot\qna.html
 wwwroot\results.html
 wwwroot\styles.css
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\styles.css
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\results.html
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\analytics.html
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\poll.html
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\qna.html
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\index.html
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\mypolls.html
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\navbar.js
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\index.html
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\poll.html
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\qna.html
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\results.html
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\wwwroot\styles.css
