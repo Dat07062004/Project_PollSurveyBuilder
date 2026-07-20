@@ -141,8 +141,8 @@ public class AuthService : IAuthService
             QuestionType = p.QuestionType.ToString(),
             IsClosed = p.IsClosed,
             IsExpired = p.IsExpired,
-            ExpiresAt = p.ExpiresAt,
-            CreatedAt = p.CreatedAt,
+            ExpiresAt = p.ExpiresAt.HasValue ? DateTime.SpecifyKind(p.ExpiresAt.Value, DateTimeKind.Utc) : null,
+            CreatedAt = DateTime.SpecifyKind(p.CreatedAt, DateTimeKind.Utc),
             TotalVotes = p.Votes.Count
         }).ToList();
     }

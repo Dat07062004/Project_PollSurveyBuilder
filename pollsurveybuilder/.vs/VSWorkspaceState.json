@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PollSurveyBuilder.Domain",
+    "\\PollSurveyBuilder.Domain\\Entities"
   ],
   "SelectedNode": "\\PollSurveyBuilder.slnx",
   "PreviewInSolutionExplorer": false
