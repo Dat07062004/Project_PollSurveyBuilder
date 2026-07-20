@@ -3,6 +3,34 @@
   "WorkspaceRootPath": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.domain\\entities\\polloption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|solutionrelative:pollsurveybuilder.domain\\entities\\polloption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.domain\\entities\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|solutionrelative:pollsurveybuilder.domain\\entities\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|solutionrelative:pollsurveybuilder.domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.domain\\entities\\qnaquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|solutionrelative:pollsurveybuilder.domain\\entities\\qnaquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.domain\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5BAFE09C-20E1-85AC-5251-F6A87BC109FE}|PollSurveyBuilder.Domain\\PollSurveyBuilder.Domain.csproj|solutionrelative:pollsurveybuilder.domain\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2B18AD21-0033-7C63-CB37-39010DF6B664}|PollSurveyBuilder.API\\PollSurveyBuilder.API.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2B18AD21-0033-7C63-CB37-39010DF6B664}|PollSurveyBuilder.API\\PollSurveyBuilder.API.csproj|solutionrelative:pollsurveybuilder.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2B18AD21-0033-7C63-CB37-39010DF6B664}|PollSurveyBuilder.API\\PollSurveyBuilder.API.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2B18AD21-0033-7C63-CB37-39010DF6B664}|PollSurveyBuilder.API\\PollSurveyBuilder.API.csproj|solutionrelative:pollsurveybuilder.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8C8DC327-8AC1-503F-D40D-0ADBD698AD8A}|PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj|d:\\it\\thaycanh\\coursework\\bailam\\project_pollsurveybuilder\\pollsurveybuilder\\pollsurveybuilder.web\\wwwroot\\poll.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8C8DC327-8AC1-503F-D40D-0ADBD698AD8A}|PollSurveyBuilder.Web\\PollSurveyBuilder.Web.csproj|solutionrelative:pollsurveybuilder.web\\wwwroot\\poll.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -31,15 +59,99 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PollOption.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\PollOption.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Domain\\Entities\\PollOption.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\PollOption.cs",
+              "RelativeToolTip": "PollSurveyBuilder.Domain\\Entities\\PollOption.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:44:19.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Vote.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\Vote.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Domain\\Entities\\Vote.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\Vote.cs",
+              "RelativeToolTip": "PollSurveyBuilder.Domain\\Entities\\Vote.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:44:27.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Domain\\Entities\\User.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\User.cs",
+              "RelativeToolTip": "PollSurveyBuilder.Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:44:21.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QnAQuestion.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\QnAQuestion.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Domain\\Entities\\QnAQuestion.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\QnAQuestion.cs",
+              "RelativeToolTip": "PollSurveyBuilder.Domain\\Entities\\QnAQuestion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:44:20.086Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Poll.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\Poll.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.Domain\\Entities\\Poll.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Domain\\Entities\\Poll.cs",
+              "RelativeToolTip": "PollSurveyBuilder.Domain\\Entities\\Poll.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:44:02.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PollsController.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.API\\Controllers\\PollsController.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.API\\Controllers\\PollsController.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.API\\Controllers\\PollsController.cs",
+              "RelativeToolTip": "PollSurveyBuilder.API\\Controllers\\PollsController.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:43:31.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "PollSurveyBuilder.API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "PollSurveyBuilder.API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T04:43:30.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "poll.html",
               "DocumentMoniker": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\wwwroot\\poll.html",
               "RelativeDocumentMoniker": "PollSurveyBuilder.Web\\wwwroot\\poll.html",
               "ToolTip": "D:\\IT\\thaycanh\\COURSEWORK\\bailam\\Project_PollSurveyBuilder\\pollsurveybuilder\\PollSurveyBuilder.Web\\wwwroot\\poll.html",
               "RelativeToolTip": "PollSurveyBuilder.Web\\wwwroot\\poll.html",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAKoAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-07-19T18:38:50.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-19T18:38:50.952Z"
             }
           ]
         }

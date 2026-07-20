@@ -14,6 +14,15 @@ public class CreatePollRequest
     public int? ExpiresInHours { get; set; }
 }
 
+public class UpdatePollRequest
+{
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public QuestionType? QuestionType { get; set; }
+    public List<string>? Options { get; set; }
+    public DateTime? ExpiresAt { get; set; }
+}
+
 public class PollDetailsDto
 {
     public Guid Id { get; set; }

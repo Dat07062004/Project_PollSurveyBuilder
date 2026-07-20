@@ -31,12 +31,12 @@ public class AuthService : IAuthService
     {
         if (await _userRepository.ExistsEmailAsync(request.Email))
         {
-            throw new InvalidOperationException("Email/Gmail này đã được sử dụng cho một tài khoản khác.");
+            throw new InvalidOperationException("This email address is already in use.");
         }
 
         if (await _userRepository.ExistsUsernameAsync(request.Username))
         {
-            throw new InvalidOperationException("Tên đăng nhập này đã tồn tại, vui lòng chọn tên khác.");
+            throw new InvalidOperationException("This username is already taken.");
         }
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
@@ -69,13 +69,13 @@ public class AuthService : IAuthService
         var user = await _userRepository.GetByUsernameOrEmailAsync(request.UsernameOrEmail.Trim());
         if (user == null || string.IsNullOrEmpty(user.PasswordHash))
         {
-            throw new InvalidOperationException("Tài khoản hoặc mật khẩu không chính xác.");
+            throw new InvalidOperationException("Invalid username/email or password.");
         }
 
         bool valid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
         if (!valid)
         {
-            throw new InvalidOperationException("Tài khoản hoặc mật khẩu không chính xác.");
+            throw new InvalidOperationException("Invalid username/email or password.");
         }
 
         var token = GenerateJwtToken(user);
@@ -137,9 +137,11 @@ public class AuthService : IAuthService
             Id = p.Id,
             Code = p.Code,
             Title = p.Title,
+            Description = p.Description,
             QuestionType = p.QuestionType.ToString(),
             IsClosed = p.IsClosed,
             IsExpired = p.IsExpired,
+            ExpiresAt = p.ExpiresAt,
             CreatedAt = p.CreatedAt,
             TotalVotes = p.Votes.Count
         }).ToList();

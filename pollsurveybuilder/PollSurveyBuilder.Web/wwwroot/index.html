@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poll & Survey Builder - Tạo Cuộc Thăm Dò Ý Kiến</title>
+    <title>Poll & Survey Builder - Create Online Polls</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,128 +21,128 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <!-- Banner hero -->
+                <!-- Hero Banner -->
                 <div class="text-center mb-5">
-                    <h1 class="fw-extrabold display-5 text-dark mb-3">Tạo Cuộc Thăm Dò Ý Kiến Trực Tuyến</h1>
-                    <p class="lead text-muted">Tạo câu hỏi trắc nghiệm hoặc khảo sát nhanh trong vài giây. Chia sẻ link rút gọn và theo dõi kết quả tự động thời gian thực!</p>
+                    <h1 class="fw-extrabold display-5 text-dark mb-3">Create Online Polls & Surveys</h1>
+                    <p class="lead text-muted">Create multiple-choice questions or quick surveys in seconds. Share short links and track automatic real-time results!</p>
                 </div>
 
-                <!-- Form tạo Poll -->
+                <!-- Create Poll Form -->
                 <div class="card hero-card p-4 p-md-5 bg-white mb-5">
                     <h3 class="fw-bold text-dark mb-4">
-                        <i class="bi bi-pencil-square text-primary me-2"></i>Chi tiết Cuộc Thăm Dò
+                        <i class="bi bi-pencil-square text-primary me-2"></i>Poll Details
                     </h3>
 
                     <form id="poll-form">
                         <div class="mb-4">
-                            <label for="poll-title" class="form-label fw-semibold fs-5 text-dark">Câu hỏi / Tiêu đề cuộc thăm dò <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-lg border-2" id="poll-title" placeholder="Ví dụ: Bạn thích khung làm việc nào nhất trong năm 2026?" required>
+                            <label for="poll-title" class="form-label fw-semibold fs-5 text-dark">Poll Question / Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg border-2" id="poll-title" placeholder="E.g., What is your favorite framework in 2026?" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="poll-desc" class="form-label fw-semibold text-dark">Mô tả chi tiết (Tùy chọn)</label>
-                            <textarea class="form-control border-2" id="poll-desc" rows="2" placeholder="Thêm mô tả hoặc hướng dẫn bỏ phiếu..."></textarea>
+                            <label for="poll-desc" class="form-label fw-semibold text-dark">Detailed Description (Optional)</label>
+                            <textarea class="form-control border-2" id="poll-desc" rows="2" placeholder="Add a description or voting guidelines..."></textarea>
                         </div>
 
-                        <!-- Chọn Ngày/Tháng/Năm/Giờ/Phút chính xác -->
+                        <!-- Date & Time picker -->
                         <div class="mb-4">
                             <label for="poll-expires-at" class="form-label fw-semibold text-dark">
-                                <i class="bi bi-calendar-event-fill me-2 text-primary"></i>Hẹn giờ tự động hết hạn (Ngày, Tháng, Năm, Giờ, Phút)
+                                <i class="bi bi-calendar-event-fill me-2 text-primary"></i>Set Expiration Date & Time
                             </label>
                             <input type="datetime-local" id="poll-expires-at" class="form-control form-control-lg border-2">
-                            <div class="form-text text-muted">Bỏ trống nếu muốn cuộc thăm dò không giới hạn thời gian.</div>
+                            <div class="form-text text-muted">Leave empty for an unlimited duration poll.</div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-dark mb-3">Loại câu hỏi</label>
+                            <label class="form-label fw-semibold text-dark mb-3">Question Type</label>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <input type="radio" class="btn-check" name="questionType" id="type-mc" value="0" checked>
                                     <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-mc">
-                                        <div class="fw-bold fs-6"><i class="bi bi-list-check me-2"></i>Trắc nghiệm (Multiple Choice)</div>
-                                        <div class="small text-muted mt-1">Tùy chọn danh sách phương án trả lời</div>
+                                        <div class="fw-bold fs-6"><i class="bi bi-list-check me-2"></i>Multiple Choice</div>
+                                        <div class="small text-muted mt-1">Custom list of answer options</div>
                                     </label>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="radio" class="btn-check" name="questionType" id="type-yesno" value="1">
                                     <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-yesno">
-                                        <div class="fw-bold fs-6"><i class="bi bi-check2-circle me-2"></i>Có / Không (Yes / No)</div>
-                                        <div class="small text-muted mt-1">Tự động tạo phương án "Có" và "Không"</div>
+                                        <div class="fw-bold fs-6"><i class="bi bi-check2-circle me-2"></i>Yes / No</div>
+                                        <div class="small text-muted mt-1">Auto-generates "Yes" and "No" options</div>
                                     </label>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="radio" class="btn-check" name="questionType" id="type-rating" value="2">
                                     <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-rating">
-                                        <div class="fw-bold fs-6"><i class="bi bi-star-fill me-2"></i>Đánh giá (1-5 Sao)</div>
-                                        <div class="small text-muted mt-1">Tự động tạo mức đánh giá từ 1 đến 5 sao</div>
+                                        <div class="fw-bold fs-6"><i class="bi bi-star-fill me-2"></i>Rating (1-5 Stars)</div>
+                                        <div class="small text-muted mt-1">Auto-generates rating levels from 1 to 5 stars</div>
                                     </label>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="radio" class="btn-check" name="questionType" id="type-open" value="3">
                                     <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-open">
-                                        <div class="fw-bold fs-6"><i class="bi bi-chat-left-text me-2"></i>Câu hỏi mở (Open Text)</div>
-                                        <div class="small text-muted mt-1">Nhập ý kiến phản hồi tự do bằng văn bản</div>
+                                        <div class="fw-bold fs-6"><i class="bi bi-chat-left-text me-2"></i>Open Text</div>
+                                        <div class="small text-muted mt-1">Free text feedback from voters</div>
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Danh sách phương án -->
+                        <!-- Options List -->
                         <div id="options-container-wrapper" class="mb-4">
-                            <label class="form-label fw-semibold fs-5 text-dark mb-2">Các phương án lựa chọn <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold fs-5 text-dark mb-2">Answer Options <span class="text-danger">*</span></label>
                             <div id="options-list" class="d-flex flex-column gap-2 mb-3">
                                 <div class="input-group option-item">
                                     <span class="input-group-text bg-light fw-bold">1</span>
-                                    <input type="text" class="form-control option-input" placeholder="Phương án 1" required>
+                                    <input type="text" class="form-control option-input" placeholder="Option 1" required>
                                 </div>
                                 <div class="input-group option-item">
                                     <span class="input-group-text bg-light fw-bold">2</span>
-                                    <input type="text" class="form-control option-input" placeholder="Phương án 2" required>
+                                    <input type="text" class="form-control option-input" placeholder="Option 2" required>
                                 </div>
                             </div>
                             <button type="button" id="btn-add-option" class="btn btn-outline-secondary btn-sm fw-bold rounded-pill">
-                                <i class="bi bi-plus-lg me-1"></i>Thêm phương án
+                                <i class="bi bi-plus-lg me-1"></i>Add Option
                             </button>
                         </div>
 
-                        <!-- Nút Submit -->
+                        <!-- Submit Button -->
                         <div class="d-grid gap-2 mt-4 pt-3 border-top">
                             <button type="submit" id="btn-submit" class="btn btn-primary-custom btn-lg text-white fw-bold py-3 shadow">
-                                <i class="bi bi-rocket-takeoff-fill me-2"></i>Tạo Cuộc Thăm Dò & Lấy Link Rút Gọn
+                                <i class="bi bi-rocket-takeoff-fill me-2"></i>Create Poll & Get Short Link
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Kết quả tạo thành công -->
+                <!-- Success Result Card -->
                 <div id="success-card" class="card hero-card p-4 p-md-5 bg-white border-success border-2 mb-5 d-none">
                     <div class="text-center mb-4">
                         <div class="badge bg-success-subtle text-success fs-5 p-3 rounded-circle mb-3">
                             <i class="bi bi-check-lg display-6"></i>
                         </div>
-                        <h2 class="fw-bold text-success">Tạo Cuộc Thăm Dò Thành Công!</h2>
-                        <p class="text-muted">Gửi đường link rút gọn bên dưới cho mọi người để bắt đầu bình chọn.</p>
+                        <h2 class="fw-bold text-success">Poll Created Successfully!</h2>
+                        <p class="text-muted">Send the short link below to everyone to start voting.</p>
                     </div>
 
                     <div class="bg-light p-4 rounded-4 mb-4">
-                        <label class="form-label fw-bold text-dark">Link Bỏ Phiếu Trực Tiếp:</label>
+                        <label class="form-label fw-bold text-dark">Direct Voting Link:</label>
                         <div class="input-group input-group-lg mb-3">
                             <input type="text" id="poll-share-url" class="form-control fw-bold text-primary" readonly>
                             <button class="btn btn-primary fw-bold" id="btn-copy-url">
-                                <i class="bi bi-clipboard me-1"></i>Sao chép
+                                <i class="bi bi-clipboard me-1"></i>Copy
                             </button>
                         </div>
                     </div>
 
                     <div class="d-flex flex-wrap gap-3 justify-content-center">
                         <a id="btn-view-poll" href="#" class="btn btn-outline-primary btn-lg fw-bold rounded-pill px-4">
-                            <i class="bi bi-eye me-2"></i>Trang Bình Chọn
+                            <i class="bi bi-eye me-2"></i>Voting Page
                         </a>
                         <a id="btn-view-results" href="#" class="btn btn-success btn-lg fw-bold rounded-pill px-4">
-                            <i class="bi bi-bar-chart-fill me-2"></i>Xem Kết Quả Realtime
+                            <i class="bi bi-bar-chart-fill me-2"></i>View Real-time Results
                         </a>
                         <a id="btn-view-analytics" href="#" class="btn btn-info btn-lg text-white fw-bold rounded-pill px-4">
-                            <i class="bi bi-graph-up-arrow me-2"></i>Xem Phân Tích (Analytics)
+                            <i class="bi bi-graph-up-arrow me-2"></i>View Analytics
                         </a>
                     </div>
                 </div>
@@ -151,13 +151,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="navbar.js"></script>
+    <script src="navbar.js?v=2"></script>
     <script>
         const optionsList = document.getElementById('options-list');
         const btnAddOption = document.getElementById('btn-add-option');
         const pollForm = document.getElementById('poll-form');
 
-        // Toggle loại câu hỏi
+        // Toggle question type
         document.querySelectorAll('input[name="questionType"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 const wrapper = document.getElementById('options-container-wrapper');
@@ -172,18 +172,18 @@
             });
         });
 
-        // Thêm phương án mới
+        // Add new option
         btnAddOption.addEventListener('click', () => {
             const currentCount = optionsList.children.length;
             if (currentCount >= 6) {
-                alert('Tối đa 6 phương án cho một cuộc thăm dò trắc nghiệm.');
+                alert('Maximum 6 options allowed for a multiple-choice poll.');
                 return;
             }
             const div = document.createElement('div');
             div.className = 'input-group option-item';
             div.innerHTML = `
                 <span class="input-group-text bg-light fw-bold">${currentCount + 1}</span>
-                <input type="text" class="form-control option-input" placeholder="Phương án ${currentCount + 1}" required>
+                <input type="text" class="form-control option-input" placeholder="Option ${currentCount + 1}" required>
                 <button type="button" class="btn btn-outline-danger btn-remove-option"><i class="bi bi-trash"></i></button>
             `;
             optionsList.appendChild(div);
@@ -197,16 +197,16 @@
         function reindexOptions() {
             Array.from(optionsList.children).forEach((child, index) => {
                 child.querySelector('.input-group-text').innerText = index + 1;
-                child.querySelector('.option-input').placeholder = `Phương án ${index + 1}`;
+                child.querySelector('.option-input').placeholder = `Option ${index + 1}`;
             });
         }
 
-        // Submit Form Tạo Poll
+        // Submit Create Poll Form
         pollForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             if (!window.PollAuth.isLoggedIn()) {
-                window.showAuthRequiredModal("Bạn cần đăng nhập hoặc đăng ký tài khoản để tạo cuộc thăm dò.");
+                window.showAuthRequiredModal("You need to log in or register an account to create a poll.");
                 return;
             }
 
@@ -224,13 +224,13 @@
                     .filter(val => val.length > 0);
 
                 if (options.length < 2) {
-                    alert('Vui lòng nhập ít nhất 2 phương án cho câu hỏi trắc nghiệm.');
+                    alert('Please enter at least 2 options for multiple-choice questions.');
                     return;
                 }
             } else if (questionType === 1) { // YesNo
-                options = ['Có', 'Không'];
+                options = ['Yes', 'No'];
             } else if (questionType === 2) { // Rating
-                options = ['1 ⭐ (Rất tệ)', '2 ⭐ (Tệ)', '3 ⭐ (Bình thường)', '4 ⭐ (Tốt)', '5 ⭐ (Rất tốt)'];
+                options = ['1 ⭐ (Very Poor)', '2 ⭐ (Poor)', '3 ⭐ (Average)', '4 ⭐ (Good)', '5 ⭐ (Excellent)'];
             }
 
             const payload = { title, description, questionType, options, expiresAt };
@@ -244,14 +244,14 @@
 
                 if (!response.ok) {
                     const err = await response.json();
-                    alert(err.message || 'Lỗi khi tạo cuộc thăm dò.');
+                    alert(err.message || 'Error creating poll.');
                     return;
                 }
 
                 const data = await response.json();
                 showSuccessCard(data.code);
             } catch (err) {
-                alert('Không thể kết nối đến máy chủ API: ' + err.message);
+                alert('Cannot connect to API server: ' + err.message);
             }
         });
 
@@ -269,7 +269,7 @@
 
             document.getElementById('btn-copy-url').addEventListener('click', () => {
                 navigator.clipboard.writeText(shareUrl).then(() => {
-                    alert('Đã sao chép liên kết rút gọn!');
+                    alert('Copied short link to clipboard!');
                 });
             });
         }

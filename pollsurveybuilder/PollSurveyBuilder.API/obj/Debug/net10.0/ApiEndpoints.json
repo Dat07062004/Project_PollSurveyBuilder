@@ -91,6 +91,43 @@
   },
   {
     "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
+    "Method": "UpdatePoll",
+    "RelativePath": "api/Polls/{code}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "PollSurveyBuilder.Application.DTOs.UpdatePollRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
+    "Method": "DeletePoll",
+    "RelativePath": "api/Polls/{code}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
     "Method": "GetPollAnalytics",
     "RelativePath": "api/Polls/{code}/analytics",
     "HttpMethod": "GET",
@@ -146,6 +183,38 @@
     "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
     "Method": "GetQuestions",
     "RelativePath": "api/Polls/{code}/qna",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
+    "Method": "GetPollQrCode",
+    "RelativePath": "api/Polls/{code}/qr",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PollSurveyBuilder.API.Controllers.PollsController",
+    "Method": "GetPollQrCodeBase64",
+    "RelativePath": "api/Polls/{code}/qr-base64",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

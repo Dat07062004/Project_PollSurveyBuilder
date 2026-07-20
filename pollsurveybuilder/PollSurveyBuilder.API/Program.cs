@@ -81,10 +81,7 @@ using (var scope = app.Services.CreateScope())
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ");
 
-        try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE `Polls` ADD COLUMN `CreatedByUserId` char(36) NULL;"); } catch { }
-        try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE `Votes` ADD COLUMN `UserId` char(36) NULL;"); } catch { }
-        try { await db.Database.ExecuteSqlRawAsync("ALTER TABLE `QnAQuestions` ADD COLUMN `UserId` char(36) NULL;"); } catch { }
-
+        // Note: CreatedByUserId and UserId columns are already defined in PollDbContext and created by EnsureCreatedAsync()
         logger.LogInformation("Database verified & Users table created successfully.");
     }
     catch (Exception ex)
