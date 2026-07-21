@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PollSurveyBuilder.Common")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30490135fc6ce3f4dea9dc222d7e6c50df9492aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57cb0ce58954b06bf2f50992c05874e070a7cd25")]
 [assembly: System.Reflection.AssemblyProductAttribute("PollSurveyBuilder.Common")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PollSurveyBuilder.Common")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
