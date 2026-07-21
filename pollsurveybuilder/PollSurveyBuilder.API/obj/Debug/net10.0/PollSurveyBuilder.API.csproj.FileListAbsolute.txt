@@ -205,11 +205,6 @@ D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\Pol
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\scopedcss\bundle\PollSurveyBuilder.API.styles.css
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\ulcp4qax2k-{0}-8psn2qizyz-8psn2qizyz.gz
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\wm8z0rv45z-{0}-6lhza9d0wq-6lhza9d0wq.gz
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\gvjoxz9m21-{0}-k5jlqt7tj4-k5jlqt7tj4.gz
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\zj0a4vean4-{0}-1a0bhkl5h6-1a0bhkl5h6.gz
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\cblexcyyf6-{0}-hgiox4pkdm-hgiox4pkdm.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\ymiohzc6aj-{0}-fmk5g4ywnk-fmk5g4ywnk.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\staticwebassets.build.json
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\staticwebassets.build.json.cache
@@ -229,3 +224,8 @@ D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\Pol
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\bin\Debug\net10.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\bin\Debug\net10.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\ulcp4qax2k-{0}-atktq0twy5-atktq0twy5.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\wm8z0rv45z-{0}-z6am9uis00-z6am9uis00.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\gvjoxz9m21-{0}-ao18m1h6ic-ao18m1h6ic.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\zj0a4vean4-{0}-ss82vhzbuh-ss82vhzbuh.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\cblexcyyf6-{0}-pqlebcox6n-pqlebcox6n.gz

@@ -1,275 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kết Quả Live - Realtime Poll Results</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Realtime Results - Poll & Survey Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .progress { height: 28px; border-radius: 0; background-color: #e2e8f0; }
+        .progress-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 700; font-size: 0.9rem; border-radius: 0; }
+    </style>
 </head>
 <body>
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-9">
-        
-        <!-- Status Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <span class="badge badge-live px-3 py-2 rounded-pill me-2">
-              <i class="bi bi-broadcast me-1"></i>SignalR WebSocket Connected
-            </span>
-            <span id="pollStatusBadge" class="badge bg-success px-3 py-2 rounded-pill">Đang Mở Bỏ Phiếu</span>
-          </div>
-          <div>
-            <a id="analyticsLink" href="#" class="btn btn-outline-warning btn-sm me-2">
-              <i class="bi bi-graph-up me-1"></i>Analytics
-            </a>
-            <a id="qnaLink" href="#" class="btn btn-outline-info btn-sm me-2">
-              <i class="bi bi-chat-dots me-1"></i>Q&A Live
-            </a>
-            <button id="closePollBtn" class="btn btn-outline-danger btn-sm">
-              <i class="bi bi-lock-fill me-1"></i>Đóng Poll
-            </button>
-          </div>
+    <div id="main-nav"></div>
+
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card card-custom p-4 p-md-5 bg-white">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span id="badge-code" class="badge bg-dark fs-6 px-3 py-2"></span>
+                        <div class="d-flex align-items-center gap-2 text-success fw-bold">
+                            <span class="spinner-grow spinner-grow-sm" role="status"></span>
+                            <span>Live SignalR</span>
+                        </div>
+                    </div>
+
+                    <h2 id="poll-title" class="fw-bold text-dark mb-4"></h2>
+
+                    <div class="bg-light p-3 rounded-4 mb-4 d-flex align-items-center justify-content-between">
+                        <span class="text-muted fw-bold">Total Votes:</span>
+                        <span id="total-votes" class="badge bg-primary fs-5 px-4 py-2">0</span>
+                    </div>
+
+                    <!-- Visual Chart.js Section -->
+                    <div class="mb-5 bg-light p-4 rounded-4" style="position: relative; height: 320px;">
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+
+                    <!-- Progress Bars List -->
+                    <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-list-task text-primary me-2"></i>Vote Breakdown:</h5>
+                    <div id="results-list" class="d-flex flex-column gap-4 mb-4"></div>
+
+                    <div id="open-responses-section" class="d-none mt-4">
+                        <h4 class="fw-bold mb-3"><i class="bi bi-chat-quote-fill me-2 text-primary"></i>Open Responses:</h4>
+                        <div id="open-responses-list" class="d-flex flex-column gap-2"></div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex flex-wrap gap-2 justify-content-between">
+                        <a id="link-poll" href="#" class="btn btn-outline-secondary fw-bold rounded-pill">
+                            <i class="bi bi-arrow-left me-1"></i>Voting Page
+                        </a>
+                        <a id="link-qna" href="#" class="btn btn-outline-info fw-bold rounded-pill">
+                            <i class="bi bi-chat-dots-fill me-1"></i>Live Q&A
+                        </a>
+                        <a id="link-analytics" href="#" class="btn btn-info text-white fw-bold rounded-pill">
+                            <i class="bi bi-graph-up-arrow me-1"></i>Analytics
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="glass-card p-4 p-md-5">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <h2 id="resultsTitle" class="fw-bold mb-1">Đang tải kết quả...</h2>
-              <p id="totalVotesCount" class="text-secondary fs-5 mb-0">Tổng phiếu bầu: 0</p>
-            </div>
-            <button class="btn btn-outline-light btn-sm" id="copyShareBtn">
-              <i class="bi bi-share-fill me-1"></i>Chia sẻ Link
-            </button>
-          </div>
-
-          <hr class="border-secondary my-4">
-
-          <!-- Animated Progress Bars -->
-          <div id="barsContainer" class="mb-5">
-            <!-- Dynamic vote bar items -->
-          </div>
-
-          <!-- Chart Visualizer -->
-          <div class="row align-items-center mt-4">
-            <div class="col-md-7 mb-4 mb-md-0">
-              <h5 class="fw-bold text-center mb-3">Biểu Đồ Thanh Tương Tác</h5>
-              <div style="height: 300px;">
-                <canvas id="voteBarChart"></canvas>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <h5 class="fw-bold text-center mb-3">Phân Phối Tỷ Lệ</h5>
-              <div style="height: 250px;">
-                <canvas id="votePieChart"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <!-- Open text answers section -->
-          <div id="openTextSection" class="mt-5 d-none">
-            <h5 class="fw-bold mb-3"><i class="bi bi-chat-left-text me-2 text-info"></i>Ý Kiến & Phản Hồi Từ Độc Giả</h5>
-            <div id="openTextList" class="list-group list-group-flush rounded-3">
-              <!-- Open text feedback items -->
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    function getApiBaseUrl() {
-      return '/api/polls';
-    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="navbar.js?v=2"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        let chartInstance = null;
 
-    function getHubUrl() {
-      return '/hubs/poll';
-    }
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!code) {
+                alert("Missing poll code!");
+                window.location.href = "index.html";
+                return;
+            }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const pollCode = urlParams.get('code');
+            if (!window.PollAuth.isLoggedIn()) {
+                window.showAuthRequiredModal("Please log in to view live results.");
+                return;
+            }
 
-    if (!pollCode) {
-      alert('Mã poll không hợp lệ.');
-      window.location.href = 'index.html';
-    }
+            document.getElementById('badge-code').innerText = code;
+            document.getElementById('link-poll').href = `poll.html?code=${code}`;
+            document.getElementById('link-qna').href = `qna.html?code=${code}`;
+            document.getElementById('link-analytics').href = `analytics.html?code=${code}`;
 
-    document.getElementById('analyticsLink').href = `analytics.html?code=${pollCode}`;
-    document.getElementById('qnaLink').href = `qna.html?code=${pollCode}`;
+            await loadResults();
+            initSignalR();
+        });
 
-    let barChart = null;
-    let pieChart = null;
+        async function loadResults() {
+            try {
+                const res = await fetch(`/api/polls/${code}/results`, {
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                if (!res.ok) throw new Error("Cannot load results.");
 
-    // Load initial data
-    async function loadResults() {
-      try {
-        const resp = await fetch(`${getApiBaseUrl()}/${pollCode}/results`);
-        if (!resp.ok) {
-          alert('Không tìm thấy poll.');
-          return;
+                const data = await res.json();
+                renderResults(data);
+            } catch (err) {
+                console.error(err);
+            }
         }
-        const data = await resp.json();
-        updateUI(data);
-      } catch (err) {
-        console.error('Failed to load initial results', err);
-      }
-    }
 
-    function updateUI(data) {
-      document.getElementById('resultsTitle').innerText = data.title;
-      document.getElementById('totalVotesCount').innerText = `Tổng phiếu bầu: ${data.totalVotes}`;
+        function renderResults(data) {
+            document.getElementById('poll-title').innerText = data.pollTitle || data.title;
+            document.getElementById('total-votes').innerText = data.totalVotes;
 
-      if (data.isClosed || data.isExpired) {
-        const badge = document.getElementById('pollStatusBadge');
-        badge.className = 'badge bg-danger px-3 py-2 rounded-pill';
-        badge.innerText = data.isClosed ? 'Poll Đã Đóng' : 'Poll Hết Hạn';
-        document.getElementById('closePollBtn').disabled = true;
-      }
+            const list = document.getElementById('results-list');
+            list.innerHTML = '';
 
-      const barsContainer = document.getElementById('barsContainer');
-      barsContainer.innerHTML = '';
+            const colors = [
+                '#1d4ed8', // Bold Royal Blue
+                '#047857', // Bold Deep Emerald
+                '#0284c7', // Bold Cyan/Teal
+                '#b45309', // Bold Amber/Bronze
+                '#b91c1c', // Bold Crimson Red
+                '#6d28d9', // Bold Deep Purple
+                '#0f172a'  // Bold Dark Slate
+            ];
 
-      const colors = ['#6366f1', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
+            const labels = [];
+            const voteCounts = [];
+            const bgColors = [];
 
-      data.options.forEach((opt, idx) => {
-        const color = colors[idx % colors.length];
-        const item = document.createElement('div');
-        item.className = 'mb-3';
-        item.innerHTML = `
-          <div class="d-flex justify-content-between font-weight-bold mb-1">
-            <span class="fw-semibold">${opt.optionText}</span>
-            <span class="text-info font-monospace">${opt.voteCount} phiếu (${opt.percentage}%)</span>
-          </div>
-          <div class="progress bg-dark border border-secondary" style="height: 18px; border-radius: 9px;">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
-                 style="width: ${opt.percentage}%; background-color: ${color}; transition: width 0.6s ease;" 
-                 aria-valuenow="${opt.percentage}" aria-valuemin="0" aria-valuemax="100">
-            </div>
-          </div>
-        `;
-        barsContainer.appendChild(item);
-      });
+            if (data.options && data.options.length > 0) {
+                data.options.forEach((opt, idx) => {
+                    labels.push(opt.optionText);
+                    voteCounts.push(opt.voteCount);
+                    const colorHex = colors[idx % colors.length];
+                    bgColors.push(colorHex);
 
-      renderCharts(data.options);
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold fs-6 text-dark">${escapeHtml(opt.optionText)}</span>
+                            <span class="fw-bold text-dark">${opt.voteCount} votes (${opt.percentage}%)</span>
+                        </div>
+                        <div class="progress" style="border-radius: 0; height: 28px; background-color: #e2e8f0;">
+                            <div class="progress-bar" role="progressbar" style="width: ${opt.percentage}%; background-color: ${colorHex}; border-radius: 0;">
+                                ${opt.percentage > 5 ? opt.percentage + '%' : ''}
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
 
-      if (data.openTextResponses && data.openTextResponses.length > 0) {
-        document.getElementById('openTextSection').classList.remove('d-none');
-        const list = document.getElementById('openTextList');
-        list.innerHTML = data.openTextResponses.map(t => `
-          <div class="list-group-item bg-dark text-white border-secondary py-3">
-            <i class="bi bi-quote text-info me-2 fs-5"></i>${t}
-          </div>
-        `).join('');
-      }
-    }
-
-    function renderCharts(options) {
-      const labels = options.map(o => o.optionText);
-      const counts = options.map(o => o.voteCount);
-      const colors = ['#6366f1', '#a855f7', '#ec4899', '#06b6d4', '#10b981', '#f59e0b'];
-
-      if (!barChart) {
-        const ctxBar = document.getElementById('voteBarChart').getContext('2d');
-        barChart = new Chart(ctxBar, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Số phiếu',
-              data: counts,
-              backgroundColor: colors.slice(0, options.length),
-              borderRadius: 6
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } },
-              x: { ticks: { color: '#f8fafc' } }
+                renderChart(labels, voteCounts, bgColors);
             }
-          }
-        });
-      } else {
-        barChart.data.labels = labels;
-        barChart.data.datasets[0].data = counts;
-        barChart.update();
-      }
 
-      if (!pieChart) {
-        const ctxPie = document.getElementById('votePieChart').getContext('2d');
-        pieChart = new Chart(ctxPie, {
-          type: 'doughnut',
-          data: {
-            labels: labels,
-            datasets: [{
-              data: counts,
-              backgroundColor: colors.slice(0, options.length),
-              borderWidth: 2,
-              borderColor: '#0f172a'
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { position: 'bottom', labels: { color: '#f8fafc' } }
+            if (data.openTextResponses && data.openTextResponses.length > 0) {
+                const section = document.getElementById('open-responses-section');
+                const respList = document.getElementById('open-responses-list');
+                section.classList.remove('d-none');
+                respList.innerHTML = '';
+                data.openTextResponses.forEach(text => {
+                    const item = document.createElement('div');
+                    item.className = 'p-3 bg-light rounded-3 border-start border-4 border-primary';
+                    item.innerText = text;
+                    respList.appendChild(item);
+                });
             }
-          }
-        });
-      } else {
-        pieChart.data.labels = labels;
-        pieChart.data.datasets[0].data = counts;
-        pieChart.update();
-      }
-    }
+        }
 
-    // SignalR WebSocket Live Connection
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(getHubUrl())
-      .withAutomaticReconnect()
-      .build();
+        function renderChart(labels, data, colors) {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            if (chartInstance) {
+                chartInstance.data.labels = labels;
+                chartInstance.data.datasets[0].data = data;
+                chartInstance.data.datasets[0].backgroundColor = colors;
+                chartInstance.update();
+            } else {
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Vote Count',
+                            data: data,
+                            backgroundColor: colors,
+                            borderRadius: 0,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, ticks: { precision: 0 } }
+                        }
+                    }
+                });
+            }
+        }
 
-    connection.on("ReceiveVoteUpdate", (results) => {
-      console.log("Realtime vote update received:", results);
-      updateUI(results);
-    });
+        function initSignalR() {
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/poll")
+                .withAutomaticReconnect()
+                .build();
 
-    connection.on("ReceivePollClosed", (code) => {
-      const badge = document.getElementById('pollStatusBadge');
-      badge.className = 'badge bg-danger px-3 py-2 rounded-pill';
-      badge.innerText = 'Poll Đã Đóng';
-      document.getElementById('closePollBtn').disabled = true;
-    });
+            connection.on("ReceiveVoteUpdate", (updatedResults) => {
+                renderResults(updatedResults);
+            });
 
-    connection.start().then(() => {
-      console.log("Connected to SignalR Hub");
-      connection.invoke("JoinPollGroup", pollCode);
-    }).catch(err => console.error("SignalR Connection Error:", err));
+            connection.start().then(() => {
+                connection.invoke("JoinPollGroup", code);
+            }).catch(err => console.error(err));
+        }
 
-    document.getElementById('closePollBtn').addEventListener('click', async () => {
-      if (!confirm('Bạn có chắc chắn muốn đóng cuộc thăm dò này?')) return;
-      const resp = await fetch(`${getApiBaseUrl()}/${pollCode}/close`, { method: 'POST' });
-      if (resp.ok) {
-        alert('Đã đóng cuộc thăm dò.');
-      } else {
-        alert('Không thể đóng cuộc thăm dò.');
-      }
-    });
-
-    document.getElementById('copyShareBtn').addEventListener('click', () => {
-      const voteUrl = `${window.location.origin}/poll.html?code=${pollCode}`;
-      navigator.clipboard.writeText(voteUrl);
-      alert('Đã sao chép link bỏ phiếu: ' + voteUrl);
-    });
-
-    loadResults();
-  </script>
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
 </body>
 </html>

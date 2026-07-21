@@ -1,227 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poll & Survey Builder - Create Real-time Polls</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll & Survey Builder - Create Real-time Polls</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <div class="container py-5">
-    <!-- Header -->
-    <div class="text-center mb-5">
-      <h1 class="display-4 brand-title"><i class="bi bi-bar-chart-line-fill me-2"></i>Poll & Survey Builder</h1>
-      <p class="text-secondary fs-5">Tạo cuộc thăm dò ý kiến thời gian thực & thu thập ý kiến khán giả trong giây lát</p>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="glass-card p-4 p-md-5">
-          <h3 class="fw-bold mb-4"><i class="bi bi-plus-circle me-2 text-primary"></i>Tạo Cuộc Thăm Dò Ý Kiến Mới</h3>
-          
-          <form id="createPollForm">
-            <!-- Question Title -->
-            <div class="mb-4">
-              <label for="pollTitle" class="form-label fw-semibold">Câu Hỏi Thăm Dò <span class="text-danger">*</span></label>
-              <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary" id="pollTitle" placeholder="Ví dụ: Bạn thích ngôn ngữ lập trình nào nhất?" required>
-            </div>
-
-            <!-- Description -->
-            <div class="mb-4">
-              <label for="pollDescription" class="form-label fw-semibold">Mô Tả Chi Tiết (Tùy chọn)</label>
-              <textarea class="form-control bg-dark text-white border-secondary" id="pollDescription" rows="2" placeholder="Cung cấp thêm thông tin ngữ cảnh cho cử tri..."></textarea>
-            </div>
-
-            <!-- Question Type Selector -->
-            <div class="mb-4">
-              <label for="questionType" class="form-label fw-semibold">Loại Câu Hỏi</label>
-              <select class="form-select form-select-lg bg-dark text-white border-secondary" id="questionType">
-                <option value="0">Trắc Nghiệm (Multiple Choice - tối đa 6 tùy chọn)</option>
-                <option value="1">Có / Không (Yes / No)</option>
-                <option value="2">Đánh Giá (Rating Scale 1 - 5 Sao)</option>
-                <option value="3">Văn Bản Tự Do (Open Text Answer)</option>
-              </select>
-            </div>
-
-            <!-- Dynamic Options Section -->
-            <div id="optionsContainer" class="mb-4">
-              <label class="form-label fw-semibold d-flex justify-content-between align-items-center">
-                <span>Các Tùy Chọn Câu Trả Lời</span>
-                <span class="text-muted small">Tối đa 6 tùy chọn</span>
-              </label>
-              
-              <div id="optionsList">
-                <div class="input-group mb-2 option-input-group">
-                  <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-circle"></i></span>
-                  <input type="text" class="form-control bg-dark text-white border-secondary poll-option-input" placeholder="Tùy chọn 1" required>
-                </div>
-                <div class="input-group mb-2 option-input-group">
-                  <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-circle"></i></span>
-                  <input type="text" class="form-control bg-dark text-white border-secondary poll-option-input" placeholder="Tùy chọn 2" required>
-                </div>
-              </div>
-
-              <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="addOptionBtn">
-                <i class="bi bi-plus-lg me-1"></i>Thêm tùy chọn
-              </button>
-            </div>
-
-            <!-- Expiry Date / Time -->
-            <div class="mb-4">
-              <label for="pollExpiry" class="form-label fw-semibold">Thời Gian Hết Hạn (Tùy chọn)</label>
-              <input type="datetime-local" class="form-control bg-dark text-white border-secondary" id="pollExpiry">
-              <div class="form-text text-muted">Sau thời gian này, cuộc thăm dò sẽ tự động dừng nhận phiếu bầu mới.</div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-gradient btn-lg py-3">
-                <i class="bi bi-lightning-charge-fill me-2"></i>Tạo Thăm Dò & Lấy Link Rút Gọn
-              </button>
-            </div>
-          </form>
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 brand-title"><i class="bi bi-bar-chart-line-fill me-2"></i>Poll & Survey Builder</h1>
+            <p class="text-secondary fs-5">Tạo cuộc thăm dò ý kiến thời gian thực & thu thập ý kiến khán giả trong giây
+                lát</p>
         </div>
 
-        <!-- Success Modal / Card for Generated Link -->
-        <div id="successCard" class="glass-card p-4 mt-4 d-none">
-          <div class="text-center py-3">
-            <div class="text-success display-3 mb-2"><i class="bi bi-check-circle-fill"></i></div>
-            <h4 class="fw-bold">Tạo Thăm Dò Thành Công!</h4>
-            <p class="text-secondary">Chia sẻ liên kết bên dưới để bắt đầu thu thập bình chọn thời gian thực:</p>
-            
-            <div class="input-group input-group-lg my-3">
-              <input type="text" id="shareUrlInput" class="form-control bg-dark text-info border-info font-monospace text-center" readonly>
-              <button class="btn btn-info text-dark font-weight-bold" type="button" id="copyUrlBtn">
-                <i class="bi bi-clipboard me-1"></i>Sao Chép Link
-              </button>
-            </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-card p-4 p-md-5">
+                    <h3 class="fw-bold mb-4"><i class="bi bi-plus-circle me-2 text-primary"></i>Tạo Cuộc Thăm Dò Ý Kiến
+                        Mới</h3>
 
-            <div class="d-flex justify-content-center gap-3 mt-4">
-              <a id="votePageLink" href="#" class="btn btn-outline-light btn-lg" target="_blank">
-                <i class="bi bi-box-arrow-up-right me-1"></i>Trang Bỏ Phiếu
-              </a>
-              <a id="resultsPageLink" href="#" class="btn btn-success btn-lg" target="_blank">
-                <i class="bi bi-bar-chart-fill me-1"></i>Trang Kết Quả Live (SignalR)
-              </a>
-              <a id="analyticsPageLink" href="#" class="btn btn-warning btn-lg" target="_blank">
-                <i class="bi bi-graph-up-arrow me-1"></i>Phân Tích (Analytics)
-              </a>
+                    <form id="createPollForm">
+                        <!-- Question Title -->
+                        <div class="mb-4">
+                            <label for="pollTitle" class="form-label fw-semibold">Câu Hỏi Thăm Dò <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary"
+                                id="pollTitle" placeholder="Ví dụ: Bạn thích ngôn ngữ lập trình nào nhất?" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="pollDescription" class="form-label fw-semibold">Mô Tả Chi Tiết (Tùy
+                                chọn)</label>
+                            <textarea class="form-control bg-dark text-white border-secondary" id="pollDescription"
+                                rows="2" placeholder="Cung cấp thêm thông tin ngữ cảnh cho cử tri..."></textarea>
+                        </div>
+
+                        <!-- Question Type Selector -->
+                        <div class="mb-4">
+                            <label for="questionType" class="form-label fw-semibold">Loại Câu Hỏi</label>
+                            <select class="form-select form-select-lg bg-dark text-white border-secondary"
+                                id="questionType">
+                                <option value="0">Trắc Nghiệm (Multiple Choice - tối đa 6 tùy chọn)</option>
+                                <option value="1">Có / Không (Yes / No)</option>
+                                <option value="2">Đánh Giá (Rating Scale 1 - 5 Sao)</option>
+                                <option value="3">Văn Bản Tự Do (Open Text Answer)</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Options Section -->
+                        <div id="optionsContainer" class="mb-4">
+                            <label class="form-label fw-semibold d-flex justify-content-between align-items-center">
+                                <span>Các Tùy Chọn Câu Trả Lời</span>
+                                <span class="text-muted small">Tối đa 6 tùy chọn</span>
+                            </label>
+
+                            <div id="optionsList">
+                                <div class="input-group mb-2 option-input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-secondary"><i
+                                            class="bi bi-circle"></i></span>
+                                    <input type="text"
+                                        class="form-control bg-dark text-white border-secondary poll-option-input"
+                                        placeholder="Tùy chọn 1" required>
+                                </div>
+                                <div class="input-group mb-2 option-input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-secondary"><i
+                                            class="bi bi-circle"></i></span>
+                                    <input type="text"
+                                        class="form-control bg-dark text-white border-secondary poll-option-input"
+                                        placeholder="Tùy chọn 2" required>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="addOptionBtn">
+                                <i class="bi bi-plus-lg me-1"></i>Thêm tùy chọn
+                            </button>
+                        </div>
+
+                        <!-- Expiry Date / Time -->
+                        <div class="mb-4">
+                            <label for="pollExpiry" class="form-label fw-semibold">Thời Gian Hết Hạn (Tùy chọn)</label>
+                            <input type="datetime-local" class="form-control bg-dark text-white border-secondary"
+                                id="pollExpiry">
+                            <div class="form-text text-muted">Sau thời gian này, cuộc thăm dò sẽ tự động dừng nhận phiếu
+                                bầu mới.</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-gradient btn-lg py-3">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Tạo Thăm Dò & Lấy Link Rút Gọn
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Modal / Card for Generated Link -->
+                <div id="successCard" class="glass-card p-4 mt-4 d-none">
+                    <div class="text-center py-3">
+                        <div class="text-success display-3 mb-2"><i class="bi bi-check-circle-fill"></i></div>
+                        <h4 class="fw-bold">Tạo Thăm Dò Thành Công!</h4>
+                        <p class="text-secondary">Chia sẻ liên kết bên dưới để bắt đầu thu thập bình chọn thời gian
+                            thực:</p>
+
+                        <div class="input-group input-group-lg my-3">
+                            <input type="text" id="shareUrlInput"
+                                class="form-control bg-dark text-info border-info font-monospace text-center" readonly>
+                            <button class="btn btn-info text-dark font-weight-bold" type="button" id="copyUrlBtn">
+                                <i class="bi bi-clipboard me-1"></i>Sao Chép Link
+                            </button>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <a id="votePageLink" href="#" class="btn btn-outline-light btn-lg" target="_blank">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>Trang Bỏ Phiếu
+                            </a>
+                            <a id="resultsPageLink" href="#" class="btn btn-success btn-lg" target="_blank">
+                                <i class="bi bi-bar-chart-fill me-1"></i>Trang Kết Quả Live (SignalR)
+                            </a>
+                            <a id="analyticsPageLink" href="#" class="btn btn-warning btn-lg" target="_blank">
+                                <i class="bi bi-graph-up-arrow me-1"></i>Phân Tích (Analytics)
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    function getApiBaseUrl() {
-      return '/api/polls';
-    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function getApiBaseUrl() {
+            return '/api/polls';
+        }
 
-    const questionTypeSelect = document.getElementById('questionType');
-    const optionsContainer = document.getElementById('optionsContainer');
-    const optionsList = document.getElementById('optionsList');
-    const addOptionBtn = document.getElementById('addOptionBtn');
+        const questionTypeSelect = document.getElementById('questionType');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const optionsList = document.getElementById('optionsList');
+        const addOptionBtn = document.getElementById('addOptionBtn');
 
-    questionTypeSelect.addEventListener('change', () => {
-      const type = parseInt(questionTypeSelect.value);
-      if (type === 0) { // Multiple Choice
-        optionsContainer.classList.remove('d-none');
-      } else {
-        optionsContainer.classList.add('d-none');
-      }
-    });
+        questionTypeSelect.addEventListener('change', () => {
+            const type = parseInt(questionTypeSelect.value);
+            if (type === 0) { // Multiple Choice
+                optionsContainer.classList.remove('d-none');
+            } else {
+                optionsContainer.classList.add('d-none');
+            }
+        });
 
-    addOptionBtn.addEventListener('click', () => {
-      const currentCount = optionsList.querySelectorAll('.option-input-group').length;
-      if (currentCount >= 6) {
-        alert('Tối đa 6 tùy chọn cho mỗi câu hỏi!');
-        return;
-      }
+        addOptionBtn.addEventListener('click', () => {
+            const currentCount = optionsList.querySelectorAll('.option-input-group').length;
+            if (currentCount >= 6) {
+                alert('Tối đa 6 tùy chọn cho mỗi câu hỏi!');
+                return;
+            }
 
-      const div = document.createElement('div');
-      div.className = 'input-group mb-2 option-input-group';
-      div.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2 option-input-group';
+            div.innerHTML = `
         <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-circle"></i></span>
         <input type="text" class="form-control bg-dark text-white border-secondary poll-option-input" placeholder="Tùy chọn ${currentCount + 1}" required>
         <button class="btn btn-outline-danger remove-opt-btn" type="button"><i class="bi bi-trash"></i></button>
       `;
-      optionsList.appendChild(div);
+            optionsList.appendChild(div);
 
-      div.querySelector('.remove-opt-btn').addEventListener('click', () => {
-        if (optionsList.querySelectorAll('.option-input-group').length > 2) {
-          div.remove();
-        } else {
-          alert('Cần ít nhất 2 tùy chọn!');
-        }
-      });
-    });
-
-    document.getElementById('createPollForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const title = document.getElementById('pollTitle').value.trim();
-      const description = document.getElementById('pollDescription').value.trim();
-      const questionType = parseInt(questionTypeSelect.value);
-      const expiry = document.getElementById('pollExpiry').value;
-
-      const options = [];
-      if (questionType === 0) {
-        document.querySelectorAll('.poll-option-input').forEach(input => {
-          if (input.value.trim()) options.push(input.value.trim());
-        });
-      }
-
-      const payload = {
-        title,
-        description: description || null,
-        questionType,
-        options,
-        expiresAt: expiry ? new Date(expiry).toISOString() : null
-      };
-
-      try {
-        const resp = await fetch(getApiBaseUrl(), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+            div.querySelector('.remove-opt-btn').addEventListener('click', () => {
+                if (optionsList.querySelectorAll('.option-input-group').length > 2) {
+                    div.remove();
+                } else {
+                    alert('Cần ít nhất 2 tùy chọn!');
+                }
+            });
         });
 
-        if (!resp.ok) {
-          const err = await resp.json().catch(() => ({ message: 'Không thể tạo poll.' }));
-          alert('Lỗi: ' + (err.message || 'Không thể tạo poll. Vui lòng đảm bảo backend API đang chạy.'));
-          return;
-        }
+        document.getElementById('createPollForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        const data = await resp.json();
-        const code = data.code;
-        const origin = window.location.origin;
+            const title = document.getElementById('pollTitle').value.trim();
+            const description = document.getElementById('pollDescription').value.trim();
+            const questionType = parseInt(questionTypeSelect.value);
+            const expiry = document.getElementById('pollExpiry').value;
 
-        const pollUrl = `${origin}/poll.html?code=${code}`;
-        const resultsUrl = `${origin}/results.html?code=${code}`;
-        const analyticsUrl = `${origin}/analytics.html?code=${code}`;
+            const options = [];
+            if (questionType === 0) {
+                document.querySelectorAll('.poll-option-input').forEach(input => {
+                    if (input.value.trim()) options.push(input.value.trim());
+                });
+            }
 
-        document.getElementById('shareUrlInput').value = pollUrl;
-        document.getElementById('votePageLink').href = pollUrl;
-        document.getElementById('resultsPageLink').href = resultsUrl;
-        document.getElementById('analyticsPageLink').href = analyticsUrl;
+            const payload = {
+                title,
+                description: description || null,
+                questionType,
+                options,
+                expiresAt: expiry ? new Date(expiry).toISOString() : null
+            };
 
-        document.getElementById('successCard').classList.remove('d-none');
-        document.getElementById('successCard').scrollIntoView({ behavior: 'smooth' });
-      } catch (err) {
-        alert('Lỗi kết nối tới máy chủ API Backend. Vui lòng kiểm tra lại dự án Backend API.');
-      }
-    });
+            try {
+                const resp = await fetch(getApiBaseUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-    document.getElementById('copyUrlBtn').addEventListener('click', () => {
-      const input = document.getElementById('shareUrlInput');
-      input.select();
-      navigator.clipboard.writeText(input.value);
-      alert('Đã sao chép liên kết vào clipboard!');
-    });
-  </script>
+                if (!resp.ok) {
+                    const err = await resp.json().catch(() => ({ message: 'Không thể tạo poll.' }));
+                    alert('Lỗi: ' + (err.message || 'Không thể tạo poll. Vui lòng đảm bảo backend API đang chạy.'));
+                    return;
+                }
+
+                const data = await resp.json();
+                const code = data.code;
+                const origin = window.location.origin;
+
+                const pollUrl = `${origin}/poll.html?code=${code}`;
+                const resultsUrl = `${origin}/results.html?code=${code}`;
+                const analyticsUrl = `${origin}/analytics.html?code=${code}`;
+
+                document.getElementById('shareUrlInput').value = pollUrl;
+                document.getElementById('votePageLink').href = pollUrl;
+                document.getElementById('resultsPageLink').href = resultsUrl;
+                document.getElementById('analyticsPageLink').href = analyticsUrl;
+
+                document.getElementById('successCard').classList.remove('d-none');
+                document.getElementById('successCard').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                alert('Lỗi kết nối tới máy chủ API Backend. Vui lòng kiểm tra lại dự án Backend API.');
+            }
+        });
+
+        document.getElementById('copyUrlBtn').addEventListener('click', () => {
+            const input = document.getElementById('shareUrlInput');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert('Đã sao chép liên kết vào clipboard!');
+        });
+    </script>
 </body>
+
 </html>
