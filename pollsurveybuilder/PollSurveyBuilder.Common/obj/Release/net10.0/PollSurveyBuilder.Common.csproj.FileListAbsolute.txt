@@ -1,0 +1,12 @@
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\bin\Release\net10.0\PollSurveyBuilder.Common.deps.json
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\bin\Release\net10.0\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\bin\Release\net10.0\PollSurveyBuilder.Common.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.AssemblyInfoInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.AssemblyInfo.cs
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.csproj.CoreCompileInputs.cache
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.sourcelink.json
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\refint\PollSurveyBuilder.Common.dll
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\PollSurveyBuilder.Common.pdb
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Common\obj\Release\net10.0\ref\PollSurveyBuilder.Common.dll
