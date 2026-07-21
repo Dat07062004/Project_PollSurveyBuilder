@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Polls - Poll & Survey Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .card-poll { border: none; border-radius: 16px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-poll:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08) !important; }
+        .badge-type { background: #eef2ff; color: #4f46e5; border-radius: 20px; padding: 6px 14px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div id="main-nav"></div>
+
+    <div class="container py-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">
+                    <i class="bi bi-collection-fill text-primary me-2"></i>My Polls
+                </h2>
+                <p class="text-muted mb-0">Manage your polls, view live results, copy links, check analytics, and close polls.</p>
+            </div>
+            <a href="index.html" class="btn btn-primary btn-lg fw-bold rounded-pill shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i>Create New Poll
+            </a>
+        </div>
+
+        <div id="loading-spinner" class="text-center py-5">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted fw-semibold">Loading your polls...</p>
+        </div>
+
+        <div id="empty-state" class="text-center py-5 d-none bg-white rounded-4 shadow-sm p-5">
+            <i class="bi bi-inbox text-muted display-1"></i>
+            <h4 class="fw-bold mt-3">You haven't created any polls yet</h4>
+            <p class="text-muted">Start creating your first poll to gather opinions today!</p>
+            <a href="index.html" class="btn btn-warning btn-lg fw-bold rounded-pill shadow-sm px-4 mt-2">
+                Create Poll Now
+            </a>
+        </div>
+
+        <div id="polls-list" class="row g-4"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="navbar.js?v=2"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!window.PollAuth.isLoggedIn()) {
+                window.showAuthRequiredModal("Please log in to view your polls.");
+                document.getElementById("loading-spinner").classList.add("d-none");
+                document.getElementById("empty-state").classList.remove("d-none");
+                return;
+            }
+
+            await loadMyPolls();
+        });
+
+        async function loadMyPolls() {
+            try {
+                const res = await fetch("/api/polls/my-polls", {
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                if (!res.ok) throw new Error("Cannot load your polls.");
+
+                const polls = await res.json();
+                document.getElementById("loading-spinner").classList.add("d-none");
+                const listContainer = document.getElementById("polls-list");
+                listContainer.innerHTML = '';
+
+                if (!polls || polls.length === 0) {
+                    document.getElementById("empty-state").classList.remove("d-none");
+                    return;
+                }
+
+                polls.forEach(poll => {
+                    const statusBadge = poll.isClosed
+                        ? '<span class="badge bg-secondary">🔒 Closed</span>'
+                        : (poll.isExpired ? '<span class="badge bg-danger">⏰ Expired</span>' : '<span class="badge bg-success">🟢 Active</span>');
+
+                    let qTypeLabel = "Multiple Choice";
+                    if (poll.questionType === "YesNo" || poll.questionType === "1") qTypeLabel = "Yes / No";
+                    else if (poll.questionType === "Rating" || poll.questionType === "2") qTypeLabel = "Rating (1-5 Stars)";
+                    else if (poll.questionType === "OpenText" || poll.questionType === "3") qTypeLabel = "Open Text";
+
+                    const expiryText = poll.expiresAt ? new Date(poll.expiresAt).toLocaleString() : 'Unlimited';
+
+                    const col = document.createElement("div");
+                    col.className = "col-md-6 col-lg-4";
+                    col.innerHTML = `
+                        <div class="card card-poll shadow-sm h-100 p-4 bg-white d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge-type small">
+                                        <i class="bi bi-tag-fill me-1"></i>${qTypeLabel}
+                                    </span>
+                                    ${statusBadge}
+                                </div>
+                                <h4 class="fw-bold text-dark mb-2">${escapeHtml(poll.title)}</h4>
+                                ${poll.description ? `<p class="text-secondary small mb-2">${escapeHtml(poll.description)}</p>` : ''}
+                                <p class="text-muted small mb-3">
+                                    <i class="bi bi-calendar-event me-1"></i>Created: ${new Date(poll.createdAt).toLocaleDateString()}<br>
+                                    <i class="bi bi-clock me-1"></i>Expires: ${expiryText}
+                                </p>
+                                <div class="bg-light p-3 rounded-3 mb-3 d-flex align-items-center justify-content-between">
+                                    <span class="text-muted fw-semibold">Poll Code:</span>
+                                    <span class="badge bg-dark fs-6 px-3 py-2 font-monospace">${poll.code}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 mb-4">
+                                    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                    <span class="fw-bold text-dark fs-5">${poll.totalVotes}</span>
+                                    <span class="text-muted">votes</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2 border-top pt-3">
+                                <a href="results.html?code=${poll.code}" class="btn btn-primary fw-semibold rounded-pill w-100">
+                                    <i class="bi bi-bar-chart-fill me-2"></i>View Live Results
+                                </a>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-secondary fw-semibold rounded-pill flex-grow-1" onclick="copyPollLink('${poll.code}')">
+                                        <i class="bi bi-clipboard me-1"></i>Copy Link
+                                    </button>
+                                    <button class="btn btn-outline-primary fw-semibold rounded-pill flex-grow-1" onclick="openQrModal('${poll.code}', '${escapeJs(poll.title)}')">
+                                        <i class="bi bi-qr-code me-1"></i>QR Code
+                                    </button>
+                                    <a href="analytics.html?code=${poll.code}" class="btn btn-outline-info fw-semibold rounded-pill p-2 px-3" title="Analytics">
+                                        <i class="bi bi-graph-up-arrow"></i>
+                                    </a>
+                                </div>
+                                ${!poll.isClosed ? `
+                                    <button class="btn btn-outline-danger btn-sm fw-semibold rounded-pill w-100 mt-1" onclick="closePoll('${poll.code}')">
+                                        <i class="bi bi-lock-fill me-1"></i>Close Poll
+                                    </button>
+                                ` : ''}
+                                <div class="d-flex gap-2 mt-1">
+                                    <button class="btn btn-outline-warning btn-sm fw-semibold rounded-pill flex-grow-1" onclick="openEditModal('${poll.code}')">
+                                        <i class="bi bi-pencil-square me-1"></i>Edit
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm fw-semibold rounded-pill flex-grow-1" onclick="deletePoll('${poll.code}')">
+                                        <i class="bi bi-trash3-fill me-1"></i>Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    listContainer.appendChild(col);
+                });
+            } catch (err) {
+                document.getElementById("loading-spinner").classList.add("d-none");
+                alert(err.message);
+            }
+        }
+
+        async function closePoll(code) {
+            if (!confirm(`Are you sure you want to CLOSE poll (${code})? Once closed, people cannot vote anymore.`)) return;
+
+            try {
+                const res = await fetch(`/api/polls/${code}/close`, {
+                    method: 'POST',
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                const text = await res.text();
+                let data = {};
+                if (text) { try { data = JSON.parse(text); } catch (e) { } }
+                if (!res.ok) throw new Error(data.message || `Server error (${res.status}). Please restart dev server.`);
+
+                alert(data.message || "Poll closed successfully.");
+                await loadMyPolls();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        let editModalInstance = null;
+
+        async function openEditModal(code) {
+            try {
+                const res = await fetch(`/api/polls/${code}`);
+                if (!res.ok) throw new Error("Cannot fetch poll details.");
+                const poll = await res.json();
+
+                document.getElementById("edit-poll-code").value = poll.code;
+                document.getElementById("edit-poll-title").value = poll.title || "";
+                document.getElementById("edit-poll-desc").value = poll.description || "";
+                
+                let typeVal = "0";
+                if (typeof poll.questionType === "number") {
+                    typeVal = poll.questionType.toString();
+                } else if (poll.questionType === "YesNo") {
+                    typeVal = "1";
+                } else if (poll.questionType === "Rating") {
+                    typeVal = "2";
+                } else if (poll.questionType === "OpenText") {
+                    typeVal = "3";
+                }
+                document.getElementById("edit-poll-type").value = typeVal;
+
+                const container = document.getElementById("edit-options-container");
+                container.innerHTML = "";
+                if (poll.options && poll.options.length > 0) {
+                    poll.options.forEach(opt => addEditOptionRow(opt.optionText));
+                } else {
+                    addEditOptionRow();
+                    addEditOptionRow();
+                }
+
+                toggleEditOptionsDisplay();
+
+                if (poll.expiresAt) {
+                    const d = new Date(poll.expiresAt);
+                    const isoStr = new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+                    document.getElementById("edit-poll-expires").value = isoStr;
+                } else {
+                    document.getElementById("edit-poll-expires").value = "";
+                }
+
+                if (!editModalInstance) {
+                    editModalInstance = new bootstrap.Modal(document.getElementById("editPollModal"));
+                }
+                editModalInstance.show();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function toggleEditOptionsDisplay() {
+            const typeVal = document.getElementById("edit-poll-type").value;
+            const wrapper = document.getElementById("edit-options-wrapper");
+            if (typeVal === "0") {
+                wrapper.classList.remove("d-none");
+            } else {
+                wrapper.classList.add("d-none");
+            }
+        }
+
+        function addEditOptionRow(val = "") {
+            const container = document.getElementById("edit-options-container");
+            const div = document.createElement("div");
+            div.className = "input-group edit-option-row";
+            div.innerHTML = `
+                <input type="text" class="form-control edit-option-input" placeholder="Answer option" value="${escapeHtml(val)}">
+                <button class="btn btn-outline-danger" type="button" onclick="this.closest('.edit-option-row').remove()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        async function submitUpdatePoll() {
+            const code = document.getElementById("edit-poll-code").value;
+            const title = document.getElementById("edit-poll-title").value.trim();
+            const description = document.getElementById("edit-poll-desc").value.trim();
+            const questionTypeNum = parseInt(document.getElementById("edit-poll-type").value);
+            const expiresVal = document.getElementById("edit-poll-expires").value;
+
+            if (!title) {
+                alert("Please enter a poll title.");
+                return;
+            }
+
+            let options = [];
+            if (questionTypeNum === 0) {
+                const optionInputs = document.querySelectorAll(".edit-option-input");
+                optionInputs.forEach(input => {
+                    const v = input.value.trim();
+                    if (v) options.push(v);
+                });
+                if (options.length < 2) {
+                    alert("Please enter at least 2 answer options for multiple-choice questions.");
+                    return;
+                }
+            } else if (questionTypeNum === 1) {
+                options = ["Yes", "No"];
+            } else if (questionTypeNum === 2) {
+                options = ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"];
+            }
+
+            const payload = {
+                title: title,
+                description: description || null,
+                questionType: questionTypeNum,
+                options: options,
+                expiresAt: expiresVal ? new Date(expiresVal).toISOString() : null
+            };
+
+            try {
+                const res = await fetch(`/api/polls/${code}`, {
+                    method: 'PUT',
+                    headers: {
+                        ...window.PollAuth.getAuthHeaders(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const text = await res.text();
+                let data = {};
+                if (text) { try { data = JSON.parse(text); } catch (e) { } }
+                if (!res.ok) throw new Error(data.message || `Cannot update poll (Status ${res.status}).`);
+
+                alert("Poll updated successfully!");
+                if (editModalInstance) editModalInstance.hide();
+                await loadMyPolls();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        async function deletePoll(code) {
+            if (!confirm(`⚠️ WARNING: Are you sure you want to DELETE poll (${code})?\nThis action cannot be undone and all data will be permanently deleted.`)) return;
+
+            try {
+                const res = await fetch(`/api/polls/${code}`, {
+                    method: 'DELETE',
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                const text = await res.text();
+                let data = {};
+                if (text) { try { data = JSON.parse(text); } catch (e) { } }
+                if (!res.ok) throw new Error(data.message || `Cannot delete poll (Status ${res.status}).`);
+
+                alert(data.message || "Poll deleted successfully.");
+                await loadMyPolls();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function copyPollLink(code) {
+            const url = `${window.location.origin}/poll.html?code=${code}`;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Copied voting link: " + url);
+            });
+        }
+
+        let currentQrCode = '';
+        let qrModalInstance = null;
+
+        function openQrModal(code, title) {
+            currentQrCode = code;
+            document.getElementById("qr-poll-badge").innerText = `Code: ${code}`;
+            document.getElementById("qr-poll-title").innerText = title;
+            
+            const qrImgUrl = `/api/polls/${code}/qr`;
+            document.getElementById("qr-image").src = qrImgUrl;
+            document.getElementById("btn-download-qr").href = qrImgUrl;
+            document.getElementById("btn-download-qr").download = `QR_Poll_${code}.png`;
+
+            if (!qrModalInstance) {
+                qrModalInstance = new bootstrap.Modal(document.getElementById("qrModal"));
+            }
+            qrModalInstance.show();
+        }
+
+        function escapeHtml(str) {
+            return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+        }
+
+        function escapeJs(str) {
+            if (!str) return '';
+            return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ');
+        }
+    </script>
+
+    <!-- Edit Poll Modal -->
+    <div class="modal fade" id="editPollModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow border-0">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-pencil-square text-warning me-2"></i>Edit Poll</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="edit-poll-code">
+                    <div class="mb-3">
+                        <label for="edit-poll-title" class="form-label fw-semibold text-dark">Poll Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control rounded-3 p-2.5" id="edit-poll-title" placeholder="Enter title...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-poll-desc" class="form-label fw-semibold text-dark">Detailed Description</label>
+                        <textarea class="form-control rounded-3 p-2.5" id="edit-poll-desc" rows="2" placeholder="Enter description (optional)..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-poll-type" class="form-label fw-semibold text-dark">Question Type <span class="text-danger">*</span></label>
+                        <select class="form-select rounded-3 p-2.5" id="edit-poll-type" onchange="toggleEditOptionsDisplay()">
+                            <option value="0">Multiple Choice</option>
+                            <option value="1">Yes / No</option>
+                            <option value="2">Rating (1-5 Stars)</option>
+                            <option value="3">Open Text</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="edit-options-wrapper">
+                        <label class="form-label fw-semibold text-dark">Answer Options <span class="text-danger">*</span></label>
+                        <div id="edit-options-container" class="d-flex flex-column gap-2 mb-2"></div>
+                        <button type="button" class="btn btn-outline-primary btn-sm fw-semibold rounded-pill" onclick="addEditOptionRow()">
+                            <i class="bi bi-plus-lg me-1"></i>Add Option
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-poll-expires" class="form-label fw-semibold text-dark">Expiration Date & Time (Optional)</label>
+                        <input type="datetime-local" class="form-control rounded-3 p-2.5" id="edit-poll-expires">
+                        <small class="text-muted">Leave empty if you don't want an expiration time.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning fw-bold text-dark rounded-pill px-4" onclick="submitUpdatePoll()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View & Download QR Code Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow border-0">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-qr-code-scan text-primary me-2"></i>Poll QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <span id="qr-poll-badge" class="badge bg-dark fs-6 px-3 py-2 mb-2 font-monospace"></span>
+                    <h5 id="qr-poll-title" class="fw-bold text-dark mb-3"></h5>
+
+                    <div class="p-3 bg-light rounded-4 d-inline-block shadow-sm mb-3">
+                        <img id="qr-image" src="" alt="QR Code" class="img-fluid rounded-3" style="max-width: 220px; height: auto;">
+                    </div>
+
+                    <p class="text-muted small mb-3">Scan this QR code with your phone camera to access the poll directly.</p>
+
+                    <div class="d-flex gap-2 justify-content-center">
+                        <a id="btn-download-qr" download="qrcode.png" href="#" class="btn btn-primary fw-bold rounded-pill px-4">
+                            <i class="bi bi-download me-2"></i>Download QR (PNG)
+                        </a>
+                        <button class="btn btn-outline-secondary fw-bold rounded-pill px-3" onclick="copyPollLink(currentQrCode)">
+                            <i class="bi bi-clipboard me-1"></i>Copy Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

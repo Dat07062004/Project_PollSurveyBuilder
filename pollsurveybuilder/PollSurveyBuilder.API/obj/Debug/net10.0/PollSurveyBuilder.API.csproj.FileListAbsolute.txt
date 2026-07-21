@@ -229,3 +229,5 @@ D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\Pol
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\gvjoxz9m21-{0}-ao18m1h6ic-ao18m1h6ic.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\zj0a4vean4-{0}-ss82vhzbuh-ss82vhzbuh.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\cblexcyyf6-{0}-pqlebcox6n-pqlebcox6n.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\hgxe2ks61m-{0}-2btw42tb0s-2btw42tb0s.gz
+D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.API\obj\Debug\net10.0\compressed\3pt2c6syer-{0}-dtvf94bzkt-dtvf94bzkt.gz

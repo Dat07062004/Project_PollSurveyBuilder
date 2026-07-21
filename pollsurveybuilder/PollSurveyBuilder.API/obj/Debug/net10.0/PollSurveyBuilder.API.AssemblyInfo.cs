@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PollSurveyBuilder.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbaf6f1d1cd186ee973bd7d55928aa613c06dc40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55ff4ba1f83bcca6e93728c9d26650e5778e41e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("PollSurveyBuilder.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PollSurveyBuilder.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
