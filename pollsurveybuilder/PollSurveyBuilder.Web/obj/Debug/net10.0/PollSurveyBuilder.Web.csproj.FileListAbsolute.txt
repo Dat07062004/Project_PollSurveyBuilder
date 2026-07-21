@@ -67,7 +67,6 @@ D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\Pol
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\PollSurveyBuilder.Web.pdb
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\PollSurveyBuilder.Web.genruntimeconfig.cache
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\ref\PollSurveyBuilder.Web.dll
-D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\compressed\yb0jim8fo9-{0}-xyw5vh5e0q-xyw5vh5e0q.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\compressed\fd4u0ocsja-{0}-audjxgjdgv-audjxgjdgv.gz
 D:\IT\thaycanh\COURSEWORK\bailam\Project_PollSurveyBuilder\pollsurveybuilder\PollSurveyBuilder.Web\obj\Debug\net10.0\compressed\ve2y6d99xn-{0}-i12juvzw8j-i12juvzw8j.gz

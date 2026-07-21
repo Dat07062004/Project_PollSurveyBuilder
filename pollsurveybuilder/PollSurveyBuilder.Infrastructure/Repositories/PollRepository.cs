@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PollSurveyBuilder.Application.IRepositories;
 using PollSurveyBuilder.Domain.Entities;
+using PollSurveyBuilder.Domain.Enums;
 using PollSurveyBuilder.Infrastructure.DbContexts;
 
 namespace PollSurveyBuilder.Infrastructure.Repositories;
@@ -77,13 +78,15 @@ public class PollRepository : IPollRepository
 
     public async Task ExecuteUpdatePollRawAsync(Guid pollId, string title, string? description, int questionType, DateTime? expiresAt)
     {
-        string pollIdStr = pollId.ToString().ToLower();
-        object descObj = (object?)description ?? DBNull.Value;
-        object expiresObj = (object?)expiresAt ?? DBNull.Value;
-
-        await _context.Database.ExecuteSqlRawAsync(
-            "UPDATE `Polls` SET `Title` = {0}, `Description` = {1}, `QuestionType` = {2}, `ExpiresAt` = {3} WHERE `Id` = {4}",
-            title, descObj, questionType, expiresObj, pollIdStr);
+        var poll = await _context.Polls.FindAsync(pollId);
+        if (poll != null)
+        {
+            poll.Title = title;
+            poll.Description = description;
+            poll.QuestionType = (QuestionType)questionType;
+            poll.ExpiresAt = expiresAt;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task ExecuteReplaceOptionsRawAsync(Guid pollId, List<string> options)
