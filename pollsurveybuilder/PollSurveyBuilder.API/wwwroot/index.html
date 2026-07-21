@@ -1,133 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poll & Survey Builder - Create Real-time Polls</title>
+    <title>Poll & Survey Builder - Create Online Polls</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .hero-card { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .btn-primary-custom { background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); border: none; }
+        .option-item { transition: all 0.2s ease; }
+        .option-item:hover { transform: translateX(2px); }
+    </style>
 </head>
-
 <body>
-    <div class="container py-5">
-        <!-- Header -->
-        <div class="text-center mb-5">
-            <h1 class="display-4 brand-title"><i class="bi bi-bar-chart-line-fill me-2"></i>Poll & Survey Builder</h1>
-            <p class="text-secondary fs-5">Tạo cuộc thăm dò ý kiến thời gian thực & thu thập ý kiến khán giả trong giây
-                lát</p>
-        </div>
+    <div id="main-nav"></div>
 
+    <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="glass-card p-4 p-md-5">
-                    <h3 class="fw-bold mb-4"><i class="bi bi-plus-circle me-2 text-primary"></i>Tạo Cuộc Thăm Dò Ý Kiến
-                        Mới</h3>
+                <!-- Hero Banner -->
+                <div class="text-center mb-5">
+                    <h1 class="fw-extrabold display-5 text-dark mb-3">Create Online Polls & Surveys</h1>
+                    <p class="lead text-muted">Create multiple-choice questions or quick surveys in seconds. Share short links and track automatic real-time results!</p>
+                </div>
 
-                    <form id="createPollForm">
-                        <!-- Question Title -->
+                <!-- Create Poll Form -->
+                <div class="card hero-card p-4 p-md-5 bg-white mb-5">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="bi bi-pencil-square text-primary me-2"></i>Poll Details
+                    </h3>
+
+                    <form id="poll-form">
                         <div class="mb-4">
-                            <label for="pollTitle" class="form-label fw-semibold">Câu Hỏi Thăm Dò <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary"
-                                id="pollTitle" placeholder="Ví dụ: Bạn thích ngôn ngữ lập trình nào nhất?" required>
+                            <label for="poll-title" class="form-label fw-semibold fs-5 text-dark">Poll Question / Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-lg border-2" id="poll-title" placeholder="E.g., What is your favorite framework in 2026?" required>
                         </div>
 
-                        <!-- Description -->
                         <div class="mb-4">
-                            <label for="pollDescription" class="form-label fw-semibold">Mô Tả Chi Tiết (Tùy
-                                chọn)</label>
-                            <textarea class="form-control bg-dark text-white border-secondary" id="pollDescription"
-                                rows="2" placeholder="Cung cấp thêm thông tin ngữ cảnh cho cử tri..."></textarea>
+                            <label for="poll-desc" class="form-label fw-semibold text-dark">Detailed Description (Optional)</label>
+                            <textarea class="form-control border-2" id="poll-desc" rows="2" placeholder="Add a description or voting guidelines..."></textarea>
                         </div>
 
-                        <!-- Question Type Selector -->
+                        <!-- Date & Time picker -->
                         <div class="mb-4">
-                            <label for="questionType" class="form-label fw-semibold">Loại Câu Hỏi</label>
-                            <select class="form-select form-select-lg bg-dark text-white border-secondary"
-                                id="questionType">
-                                <option value="0">Trắc Nghiệm (Multiple Choice - tối đa 6 tùy chọn)</option>
-                                <option value="1">Có / Không (Yes / No)</option>
-                                <option value="2">Đánh Giá (Rating Scale 1 - 5 Sao)</option>
-                                <option value="3">Văn Bản Tự Do (Open Text Answer)</option>
-                            </select>
-                        </div>
-
-                        <!-- Dynamic Options Section -->
-                        <div id="optionsContainer" class="mb-4">
-                            <label class="form-label fw-semibold d-flex justify-content-between align-items-center">
-                                <span>Các Tùy Chọn Câu Trả Lời</span>
-                                <span class="text-muted small">Tối đa 6 tùy chọn</span>
+                            <label for="poll-expires-at" class="form-label fw-semibold text-dark">
+                                <i class="bi bi-calendar-event-fill me-2 text-primary"></i>Set Expiration Date & Time
                             </label>
+                            <input type="datetime-local" id="poll-expires-at" class="form-control form-control-lg border-2">
+                            <div class="form-text text-muted">Leave empty for an unlimited duration poll.</div>
+                        </div>
 
-                            <div id="optionsList">
-                                <div class="input-group mb-2 option-input-group">
-                                    <span class="input-group-text bg-dark border-secondary text-secondary"><i
-                                            class="bi bi-circle"></i></span>
-                                    <input type="text"
-                                        class="form-control bg-dark text-white border-secondary poll-option-input"
-                                        placeholder="Tùy chọn 1" required>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-dark mb-3">Question Type</label>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-mc" value="0" checked>
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-mc">
+                                        <div class="fw-bold fs-6"><i class="bi bi-list-check me-2"></i>Multiple Choice</div>
+                                        <div class="small text-muted mt-1">Custom list of answer options</div>
+                                    </label>
                                 </div>
-                                <div class="input-group mb-2 option-input-group">
-                                    <span class="input-group-text bg-dark border-secondary text-secondary"><i
-                                            class="bi bi-circle"></i></span>
-                                    <input type="text"
-                                        class="form-control bg-dark text-white border-secondary poll-option-input"
-                                        placeholder="Tùy chọn 2" required>
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-yesno" value="1">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-yesno">
+                                        <div class="fw-bold fs-6"><i class="bi bi-check2-circle me-2"></i>Yes / No</div>
+                                        <div class="small text-muted mt-1">Auto-generates "Yes" and "No" options</div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-rating" value="2">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-rating">
+                                        <div class="fw-bold fs-6"><i class="bi bi-star-fill me-2"></i>Rating (1-5 Stars)</div>
+                                        <div class="small text-muted mt-1">Auto-generates rating levels from 1 to 5 stars</div>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" class="btn-check" name="questionType" id="type-open" value="3">
+                                    <label class="btn btn-outline-primary w-100 p-3 text-start rounded-3 h-100" for="type-open">
+                                        <div class="fw-bold fs-6"><i class="bi bi-chat-left-text me-2"></i>Open Text</div>
+                                        <div class="small text-muted mt-1">Free text feedback from voters</div>
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
-                            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="addOptionBtn">
-                                <i class="bi bi-plus-lg me-1"></i>Thêm tùy chọn
+                        <!-- Options List -->
+                        <div id="options-container-wrapper" class="mb-4">
+                            <label class="form-label fw-semibold fs-5 text-dark mb-2">Answer Options <span class="text-danger">*</span></label>
+                            <div id="options-list" class="d-flex flex-column gap-2 mb-3">
+                                <div class="input-group option-item">
+                                    <span class="input-group-text bg-light fw-bold">1</span>
+                                    <input type="text" class="form-control option-input" placeholder="Option 1" required>
+                                </div>
+                                <div class="input-group option-item">
+                                    <span class="input-group-text bg-light fw-bold">2</span>
+                                    <input type="text" class="form-control option-input" placeholder="Option 2" required>
+                                </div>
+                            </div>
+                            <button type="button" id="btn-add-option" class="btn btn-outline-secondary btn-sm fw-bold rounded-pill">
+                                <i class="bi bi-plus-lg me-1"></i>Add Option
                             </button>
                         </div>
 
-                        <!-- Expiry Date / Time -->
-                        <div class="mb-4">
-                            <label for="pollExpiry" class="form-label fw-semibold">Thời Gian Hết Hạn (Tùy chọn)</label>
-                            <input type="datetime-local" class="form-control bg-dark text-white border-secondary"
-                                id="pollExpiry">
-                            <div class="form-text text-muted">Sau thời gian này, cuộc thăm dò sẽ tự động dừng nhận phiếu
-                                bầu mới.</div>
-                        </div>
-
                         <!-- Submit Button -->
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-gradient btn-lg py-3">
-                                <i class="bi bi-lightning-charge-fill me-2"></i>Tạo Thăm Dò & Lấy Link Rút Gọn
+                        <div class="d-grid gap-2 mt-4 pt-3 border-top">
+                            <button type="submit" id="btn-submit" class="btn btn-primary-custom btn-lg text-white fw-bold py-3 shadow">
+                                <i class="bi bi-rocket-takeoff-fill me-2"></i>Create Poll & Get Short Link
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Success Modal / Card for Generated Link -->
-                <div id="successCard" class="glass-card p-4 mt-4 d-none">
-                    <div class="text-center py-3">
-                        <div class="text-success display-3 mb-2"><i class="bi bi-check-circle-fill"></i></div>
-                        <h4 class="fw-bold">Tạo Thăm Dò Thành Công!</h4>
-                        <p class="text-secondary">Chia sẻ liên kết bên dưới để bắt đầu thu thập bình chọn thời gian
-                            thực:</p>
+                <!-- Success Result Card -->
+                <div id="success-card" class="card hero-card p-4 p-md-5 bg-white border-success border-2 mb-5 d-none">
+                    <div class="text-center mb-4">
+                        <div class="badge bg-success-subtle text-success fs-5 p-3 rounded-circle mb-3">
+                            <i class="bi bi-check-lg display-6"></i>
+                        </div>
+                        <h2 class="fw-bold text-success">Poll Created Successfully!</h2>
+                        <p class="text-muted">Send the short link below to everyone to start voting.</p>
+                    </div>
 
-                        <div class="input-group input-group-lg my-3">
-                            <input type="text" id="shareUrlInput"
-                                class="form-control bg-dark text-info border-info font-monospace text-center" readonly>
-                            <button class="btn btn-info text-dark font-weight-bold" type="button" id="copyUrlBtn">
-                                <i class="bi bi-clipboard me-1"></i>Sao Chép Link
+                    <div class="bg-light p-4 rounded-4 mb-4">
+                        <label class="form-label fw-bold text-dark">Direct Voting Link:</label>
+                        <div class="input-group input-group-lg mb-3">
+                            <input type="text" id="poll-share-url" class="form-control fw-bold text-primary" readonly>
+                            <button class="btn btn-primary fw-bold" id="btn-copy-url">
+                                <i class="bi bi-clipboard me-1"></i>Copy
                             </button>
                         </div>
+                    </div>
 
-                        <div class="d-flex justify-content-center gap-3 mt-4">
-                            <a id="votePageLink" href="#" class="btn btn-outline-light btn-lg" target="_blank">
-                                <i class="bi bi-box-arrow-up-right me-1"></i>Trang Bỏ Phiếu
-                            </a>
-                            <a id="resultsPageLink" href="#" class="btn btn-success btn-lg" target="_blank">
-                                <i class="bi bi-bar-chart-fill me-1"></i>Trang Kết Quả Live (SignalR)
-                            </a>
-                            <a id="analyticsPageLink" href="#" class="btn btn-warning btn-lg" target="_blank">
-                                <i class="bi bi-graph-up-arrow me-1"></i>Phân Tích (Analytics)
-                            </a>
-                        </div>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                        <a id="btn-view-poll" href="#" class="btn btn-outline-primary btn-lg fw-bold rounded-pill px-4">
+                            <i class="bi bi-eye me-2"></i>Voting Page
+                        </a>
+                        <a id="btn-view-results" href="#" class="btn btn-success btn-lg fw-bold rounded-pill px-4">
+                            <i class="bi bi-bar-chart-fill me-2"></i>View Real-time Results
+                        </a>
+                        <a id="btn-view-analytics" href="#" class="btn btn-info btn-lg text-white fw-bold rounded-pill px-4">
+                            <i class="bi bi-graph-up-arrow me-2"></i>View Analytics
+                        </a>
                     </div>
                 </div>
             </div>
@@ -135,113 +151,128 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="navbar.js?v=2"></script>
     <script>
-        function getApiBaseUrl() {
-            return '/api/polls';
-        }
+        const optionsList = document.getElementById('options-list');
+        const btnAddOption = document.getElementById('btn-add-option');
+        const pollForm = document.getElementById('poll-form');
 
-        const questionTypeSelect = document.getElementById('questionType');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const optionsList = document.getElementById('optionsList');
-        const addOptionBtn = document.getElementById('addOptionBtn');
-
-        questionTypeSelect.addEventListener('change', () => {
-            const type = parseInt(questionTypeSelect.value);
-            if (type === 0) { // Multiple Choice
-                optionsContainer.classList.remove('d-none');
-            } else {
-                optionsContainer.classList.add('d-none');
-            }
-        });
-
-        addOptionBtn.addEventListener('click', () => {
-            const currentCount = optionsList.querySelectorAll('.option-input-group').length;
-            if (currentCount >= 6) {
-                alert('Tối đa 6 tùy chọn cho mỗi câu hỏi!');
-                return;
-            }
-
-            const div = document.createElement('div');
-            div.className = 'input-group mb-2 option-input-group';
-            div.innerHTML = `
-        <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-circle"></i></span>
-        <input type="text" class="form-control bg-dark text-white border-secondary poll-option-input" placeholder="Tùy chọn ${currentCount + 1}" required>
-        <button class="btn btn-outline-danger remove-opt-btn" type="button"><i class="bi bi-trash"></i></button>
-      `;
-            optionsList.appendChild(div);
-
-            div.querySelector('.remove-opt-btn').addEventListener('click', () => {
-                if (optionsList.querySelectorAll('.option-input-group').length > 2) {
-                    div.remove();
+        // Toggle question type
+        document.querySelectorAll('input[name="questionType"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const wrapper = document.getElementById('options-container-wrapper');
+                const inputs = document.querySelectorAll('.option-input');
+                if (e.target.value === '0') {
+                    wrapper.classList.remove('d-none');
+                    inputs.forEach(input => input.setAttribute('required', 'required'));
                 } else {
-                    alert('Cần ít nhất 2 tùy chọn!');
+                    wrapper.classList.add('d-none');
+                    inputs.forEach(input => input.removeAttribute('required'));
                 }
             });
         });
 
-        document.getElementById('createPollForm').addEventListener('submit', async (e) => {
+        // Add new option
+        btnAddOption.addEventListener('click', () => {
+            const currentCount = optionsList.children.length;
+            if (currentCount >= 6) {
+                alert('Maximum 6 options allowed for a multiple-choice poll.');
+                return;
+            }
+            const div = document.createElement('div');
+            div.className = 'input-group option-item';
+            div.innerHTML = `
+                <span class="input-group-text bg-light fw-bold">${currentCount + 1}</span>
+                <input type="text" class="form-control option-input" placeholder="Option ${currentCount + 1}" required>
+                <button type="button" class="btn btn-outline-danger btn-remove-option"><i class="bi bi-trash"></i></button>
+            `;
+            optionsList.appendChild(div);
+
+            div.querySelector('.btn-remove-option').addEventListener('click', () => {
+                div.remove();
+                reindexOptions();
+            });
+        });
+
+        function reindexOptions() {
+            Array.from(optionsList.children).forEach((child, index) => {
+                child.querySelector('.input-group-text').innerText = index + 1;
+                child.querySelector('.option-input').placeholder = `Option ${index + 1}`;
+            });
+        }
+
+        // Submit Create Poll Form
+        pollForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const title = document.getElementById('pollTitle').value.trim();
-            const description = document.getElementById('pollDescription').value.trim();
-            const questionType = parseInt(questionTypeSelect.value);
-            const expiry = document.getElementById('pollExpiry').value;
-
-            const options = [];
-            if (questionType === 0) {
-                document.querySelectorAll('.poll-option-input').forEach(input => {
-                    if (input.value.trim()) options.push(input.value.trim());
-                });
+            if (!window.PollAuth.isLoggedIn()) {
+                window.showAuthRequiredModal("You need to log in or register an account to create a poll.");
+                return;
             }
 
-            const payload = {
-                title,
-                description: description || null,
-                questionType,
-                options,
-                expiresAt: expiry ? new Date(expiry).toISOString() : null
-            };
+            const title = document.getElementById('poll-title').value.trim();
+            const description = document.getElementById('poll-desc').value.trim();
+            const questionType = parseInt(document.querySelector('input[name="questionType"]:checked').value);
+
+            const expiresAtInput = document.getElementById('poll-expires-at').value;
+            const expiresAt = expiresAtInput ? new Date(expiresAtInput).toISOString() : null;
+
+            let options = [];
+            if (questionType === 0) { // MultipleChoice
+                options = Array.from(document.querySelectorAll('.option-input'))
+                    .map(input => input.value.trim())
+                    .filter(val => val.length > 0);
+
+                if (options.length < 2) {
+                    alert('Please enter at least 2 options for multiple-choice questions.');
+                    return;
+                }
+            } else if (questionType === 1) { // YesNo
+                options = ['Yes', 'No'];
+            } else if (questionType === 2) { // Rating
+                options = ['1 ⭐ (Very Poor)', '2 ⭐ (Poor)', '3 ⭐ (Average)', '4 ⭐ (Good)', '5 ⭐ (Excellent)'];
+            }
+
+            const payload = { title, description, questionType, options, expiresAt };
 
             try {
-                const resp = await fetch(getApiBaseUrl(), {
+                const response = await fetch('/api/polls', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: window.PollAuth.getAuthHeaders(),
                     body: JSON.stringify(payload)
                 });
 
-                if (!resp.ok) {
-                    const err = await resp.json().catch(() => ({ message: 'Không thể tạo poll.' }));
-                    alert('Lỗi: ' + (err.message || 'Không thể tạo poll. Vui lòng đảm bảo backend API đang chạy.'));
+                if (!response.ok) {
+                    const err = await response.json();
+                    alert(err.message || 'Error creating poll.');
                     return;
                 }
 
-                const data = await resp.json();
-                const code = data.code;
-                const origin = window.location.origin;
-
-                const pollUrl = `${origin}/poll.html?code=${code}`;
-                const resultsUrl = `${origin}/results.html?code=${code}`;
-                const analyticsUrl = `${origin}/analytics.html?code=${code}`;
-
-                document.getElementById('shareUrlInput').value = pollUrl;
-                document.getElementById('votePageLink').href = pollUrl;
-                document.getElementById('resultsPageLink').href = resultsUrl;
-                document.getElementById('analyticsPageLink').href = analyticsUrl;
-
-                document.getElementById('successCard').classList.remove('d-none');
-                document.getElementById('successCard').scrollIntoView({ behavior: 'smooth' });
+                const data = await response.json();
+                showSuccessCard(data.code);
             } catch (err) {
-                alert('Lỗi kết nối tới máy chủ API Backend. Vui lòng kiểm tra lại dự án Backend API.');
+                alert('Cannot connect to API server: ' + err.message);
             }
         });
 
-        document.getElementById('copyUrlBtn').addEventListener('click', () => {
-            const input = document.getElementById('shareUrlInput');
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            alert('Đã sao chép liên kết vào clipboard!');
-        });
+        function showSuccessCard(code) {
+            pollForm.closest('.card').classList.add('d-none');
+            const successCard = document.getElementById('success-card');
+            successCard.classList.remove('d-none');
+
+            const shareUrl = `${window.location.origin}/poll.html?code=${code}`;
+            document.getElementById('poll-share-url').value = shareUrl;
+
+            document.getElementById('btn-view-poll').href = `poll.html?code=${code}`;
+            document.getElementById('btn-view-results').href = `results.html?code=${code}`;
+            document.getElementById('btn-view-analytics').href = `analytics.html?code=${code}`;
+
+            document.getElementById('btn-copy-url').addEventListener('click', () => {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Copied short link to clipboard!');
+                });
+            });
+        }
     </script>
 </body>
-
 </html>
