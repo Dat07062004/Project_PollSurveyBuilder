@@ -35,13 +35,16 @@ jobs:
   docker-build:
     needs: build-and-test
     runs-on: ubuntu-latest
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_PASS: ${{ secrets.DOCKER_HUB_TOKEN }}
 
     steps:
     - name: Checkout Code Repository
       uses: actions/checkout@v4
 
     - name: Log in to Docker Hub
-      if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.DOCKER_HUB_USERNAME != ''
+      if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.DOCKER_USER != ''
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -52,16 +55,16 @@ jobs:
       with:
         context: ./pollsurveybuilder
         file: ./pollsurveybuilder/Dockerfile
-        push: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.DOCKER_HUB_USERNAME != '' }}
-        tags: ${{ secrets.DOCKER_HUB_USERNAME != '' && format('{0}/pollsurvey-api:latest', secrets.DOCKER_HUB_USERNAME) || 'pollsurvey-api:latest' }}
+        push: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.DOCKER_USER != '' }}
+        tags: ${{ env.DOCKER_USER != '' && format('{0}/pollsurvey-api:latest', env.DOCKER_USER) || 'pollsurvey-api:latest' }}
 
     - name: Build and Push Web UI Docker Image to Docker Hub
       uses: docker/build-push-action@v5
       with:
         context: ./pollsurveybuilder
         file: ./pollsurveybuilder/PollSurveyBuilder.Web/Dockerfile
-        push: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.DOCKER_HUB_USERNAME != '' }}
-        tags: ${{ secrets.DOCKER_HUB_USERNAME != '' && format('{0}/pollsurvey-web:latest', secrets.DOCKER_HUB_USERNAME) || 'pollsurvey-web:latest' }}
+        push: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.DOCKER_USER != '' }}
+        tags: ${{ env.DOCKER_USER != '' && format('{0}/pollsurvey-web:latest', env.DOCKER_USER) || 'pollsurvey-web:latest' }}
 
   deploy-paas:
     needs: docker-build
