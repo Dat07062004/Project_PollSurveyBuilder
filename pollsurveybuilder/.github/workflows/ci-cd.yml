@@ -2,13 +2,16 @@ name: Build, Test & Containerize CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "fix1" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "fix1" ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pollsurveybuilder
 
     steps:
     - name: Checkout Code Repository
@@ -32,6 +35,9 @@ jobs:
   docker-build:
     needs: build-and-test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pollsurveybuilder
 
     steps:
     - name: Checkout Code Repository
@@ -47,16 +53,16 @@ jobs:
     - name: Build and Push API Docker Image to Docker Hub
       uses: docker/build-push-action@v5
       with:
-        context: .
-        file: Dockerfile
+        context: ./pollsurveybuilder
+        file: ./pollsurveybuilder/Dockerfile
         push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pollsurvey-api:latest
 
     - name: Build and Push Web UI Docker Image to Docker Hub
       uses: docker/build-push-action@v5
       with:
-        context: .
-        file: PollSurveyBuilder.Web/Dockerfile
+        context: ./pollsurveybuilder
+        file: ./pollsurveybuilder/PollSurveyBuilder.Web/Dockerfile
         push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pollsurvey-web:latest
 
@@ -69,10 +75,8 @@ jobs:
     - name: Trigger PaaS Auto-Deployment (Render / Railway / Azure)
       run: |
         echo "Deploying latest Docker images to PaaS platform..."
-        # Optional: Trigger Render/Railway Webhook if secret configured
         if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
           curl -s "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
         else
           echo "PaaS Deploy Hook Step Executed Successfully."
         fi
-
