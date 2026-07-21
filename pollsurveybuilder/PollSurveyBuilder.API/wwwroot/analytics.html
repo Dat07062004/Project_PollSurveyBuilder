@@ -1,139 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics Dashboard - Poll & Survey Builder</title>
+    <title>Analytics Report - Poll & Survey Builder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
+        .card-custom { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    </style>
 </head>
-
 <body>
-    <div class="container py-5">
+    <div id="main-nav"></div>
+
+    <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-
-                <!-- Navigation Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold brand-title mb-0"><i class="bi bi-graph-up-arrow me-2"></i>Analytics Dashboard
-                    </h2>
-                    <div>
-                        <a id="resultsLink" href="#" class="btn btn-outline-light btn-sm me-2"><i
-                                class="bi bi-bar-chart-fill me-1"></i>Trang Results</a>
-                        <a id="qnaLink" href="#" class="btn btn-outline-info btn-sm"><i
-                                class="bi bi-chat-quote-fill me-1"></i>Trang Q&A</a>
+                <div class="card card-custom p-4 p-md-5 bg-white mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span id="badge-code" class="badge bg-dark fs-6 px-3 py-2"></span>
+                        <span class="badge bg-info text-white fs-6 px-3 py-2"><i class="bi bi-graph-up me-1"></i>Distinction Analytics</span>
                     </div>
-                </div>
 
-                <!-- Metric KPI Cards -->
-                <div class="row mb-4 g-3">
-                    <div class="col-md-4">
-                        <div class="glass-card p-4 text-center">
-                            <div class="text-secondary small fw-semibold text-uppercase">Tổng Phiếu Bầu</div>
-                            <div id="totalVotesCard" class="display-4 fw-bold text-info my-2">0</div>
-                            <div class="text-muted small"><i class="bi bi-people-fill me-1"></i>Tổng số lượt bình chọn
+                    <h2 id="poll-title" class="fw-bold text-dark mb-4"></h2>
+
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-4">
+                            <div class="p-4 bg-primary bg-opacity-10 rounded-4 text-center">
+                                <i class="bi bi-people-fill text-primary display-5 mb-2"></i>
+                                <div class="text-muted fw-semibold">Total Votes</div>
+                                <div id="stat-total" class="display-6 fw-bold text-primary">0</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-4 bg-success bg-opacity-10 rounded-4 text-center">
+                                <i class="bi bi-trophy-fill text-success display-5 mb-2"></i>
+                                <div class="text-muted fw-semibold">Leading Option</div>
+                                <div id="stat-top" class="fs-5 fw-bold text-success text-truncate mt-2">N/A</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-4 bg-warning bg-opacity-10 rounded-4 text-center">
+                                <i class="bi bi-clock-history text-warning display-5 mb-2"></i>
+                                <div class="text-muted fw-semibold">Peak Minute</div>
+                                <div id="stat-peak" class="fs-5 fw-bold text-warning text-truncate mt-2">N/A</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="glass-card p-4 text-center">
-                            <div class="text-secondary small fw-semibold text-uppercase">Phút Bỏ Phiếu Cao Nhất</div>
-                            <div id="peakMinuteCard" class="fs-4 fw-bold text-warning my-2 text-truncate">N/A</div>
-                            <div class="text-muted small"><i class="bi bi-clock-history me-1"></i>Peak Voting Minute
-                            </div>
-                        </div>
+
+                    <h4 class="fw-bold mb-3"><i class="bi bi-activity text-primary me-2"></i>Vote Timeline Chart:</h4>
+                    <div class="bg-light p-4 rounded-4 mb-4" style="height: 350px;">
+                        <canvas id="timelineChart"></canvas>
                     </div>
-                    <div class="col-md-4">
-                        <div class="glass-card p-4 text-center">
-                            <div class="text-secondary small fw-semibold text-uppercase">Tùy Chọn Dẫn Đầu</div>
-                            <div id="topOptionCard" class="fs-4 fw-bold text-success my-2 text-truncate">N/A</div>
-                            <div class="text-muted small"><i class="bi bi-trophy-fill me-1"></i>Top Answer Option</div>
-                        </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-between">
+                        <a id="link-results" href="#" class="btn btn-outline-primary fw-bold rounded-pill">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Live Results
+                        </a>
                     </div>
                 </div>
-
-                <!-- Trend Line Chart -->
-                <div class="glass-card p-4 p-md-5 mb-4">
-                    <h4 class="fw-bold mb-4"><i class="bi bi-activity text-primary me-2"></i>Xu Hướng Bỏ Phiếu Theo Thời
-                        Gian (Line Chart)</h4>
-                    <div style="height: 320px;">
-                        <canvas id="trendChart"></canvas>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="navbar.js?v=2"></script>
     <script>
-        const API_BASE = 'http://localhost:5000/api/polls';
         const urlParams = new URLSearchParams(window.location.search);
-        const pollCode = urlParams.get('code');
+        const code = urlParams.get('code');
+        let chartInstance = null;
 
-        if (!pollCode) {
-            alert('Mã poll không hợp lệ.');
-            window.location.href = 'index.html';
-        }
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!code) {
+                alert("Missing poll code!");
+                window.location.href = "index.html";
+                return;
+            }
 
-        document.getElementById('resultsLink').href = `results.html?code=${pollCode}`;
-        document.getElementById('qnaLink').href = `qna.html?code=${pollCode}`;
+            if (!window.PollAuth.isLoggedIn()) {
+                window.showAuthRequiredModal("Please log in to view Analytics report.");
+                return;
+            }
+
+            document.getElementById('badge-code').innerText = code;
+            document.getElementById('link-results').href = `results.html?code=${code}`;
+
+            await loadAnalytics();
+        });
 
         async function loadAnalytics() {
             try {
-                const resp = await fetch(`${API_BASE}/${pollCode}/analytics`);
-                if (!resp.ok) {
-                    alert('Không thể tải dữ liệu phân tích.');
-                    return;
-                }
-                const data = await resp.json();
+                const res = await fetch(`/api/polls/${code}/analytics`, {
+                    headers: window.PollAuth.getAuthHeaders()
+                });
+                if (!res.ok) throw new Error("Cannot load analytics report.");
 
-                document.getElementById('totalVotesCard').innerText = data.totalVotes;
-                document.getElementById('peakMinuteCard').innerText = data.peakVotingMinute;
-                document.getElementById('topOptionCard').innerText = data.topOption;
-
-                renderTrendChart(data.votesOverTime);
+                const data = await res.json();
+                renderAnalytics(data);
             } catch (err) {
-                console.error('Analytics load failed', err);
+                console.error(err);
             }
         }
 
-        function renderTrendChart(points) {
-            const labels = points.map(p => p.timeLabel);
-            const values = points.map(p => p.count);
+        function renderAnalytics(data) {
+            document.getElementById('poll-title').innerText = data.title;
+            document.getElementById('stat-total').innerText = data.totalVotes;
+            document.getElementById('stat-top').innerText = data.topOption;
+            document.getElementById('stat-peak').innerText = data.peakVotingMinute || 'N/A';
 
-            const ctx = document.getElementById('trendChart').getContext('2d');
-            new Chart(ctx, {
+            const labels = (data.votesOverTime || []).map(p => p.timeLabel);
+            const values = (data.votesOverTime || []).map(p => p.count);
+
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels.length ? labels : ['Bắt đầu'],
+                    labels: labels.length > 0 ? labels : ['No Data'],
                     datasets: [{
-                        label: 'Số lượt bỏ phiếu',
-                        data: values.length ? values : [0],
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                        label: 'Vote Count',
+                        data: values.length > 0 ? values : [0],
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
                         fill: true,
                         tension: 0.3,
-                        pointRadius: 5,
-                        pointBackgroundColor: '#a855f7'
+                        pointRadius: 6,
+                        pointBackgroundColor: '#4f46e5'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
                     scales: {
-                        y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } },
-                        x: { ticks: { color: '#f8fafc' } }
+                        y: { beginAtZero: true, ticks: { precision: 0 } }
                     }
                 }
             });
         }
-
-        loadAnalytics();
     </script>
 </body>
-
 </html>
